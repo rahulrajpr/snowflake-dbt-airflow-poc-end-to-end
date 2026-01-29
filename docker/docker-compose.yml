@@ -1,15 +1,37 @@
 version: '3.8'
 
 services:
-  # PostgreSQL Database
+  # PostgreSQL Internal - For Airflow & Superset metadata
+  postgres_internal:
+    image: postgres:17.7-alpine
+    container_name: postgres-internal-container
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_INTERNAL_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_INTERNAL_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_INTERNAL_DB}
+    volumes:
+      - ${POSTGRES_INTERNAL_DATA_PATH}:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5433:5432"
+    networks:
+      - shared-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_INTERNAL_USER} -d ${POSTGRES_INTERNAL_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # PostgreSQL - For Business Database Operations
   postgres:
-    image: postgres:13
+    image: postgres:17.7-alpine
     container_name: postgres-container
     restart: always
     environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - ${POSTGRES_DATA_PATH}:/var/lib/postgresql/data
     ports:
@@ -17,8 +39,24 @@ services:
     networks:
       - shared-network
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Redis for Superset caching
+  redis:
+    image: redis:7.4-alpine
+    container_name: redis-container
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - shared-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
       retries: 5
 
   # Airflow Database Initialization (runs once)
@@ -26,12 +64,13 @@ services:
     image: apache/airflow:2.8.1
     container_name: airflow-init-container
     depends_on:
-      postgres:
+      postgres_internal:
         condition: service_healthy
     environment:
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
-      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal/${POSTGRES_INTERNAL_DB}
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY}
     command: >
       bash -c "
         airflow db init &&
@@ -39,6 +78,8 @@ services:
       "
     networks:
       - shared-network
+    volumes:
+      - ${AIRFLOW_DATA_PATH}:/opt/airflow
 
   # Apache Airflow Container
   airflow:
@@ -46,15 +87,20 @@ services:
     container_name: airflow-container
     restart: always
     depends_on:
-      - postgres
-      - airflow-init
+      postgres_internal:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
     environment:
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
-      - AIRFLOW__CORE__LOAD_EXAMPLES=False
-      - AIRFLOW__CORE__FERNET_KEY=
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal/${POSTGRES_INTERNAL_DB}
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY}
     volumes:
       - ${AIRFLOW_DATA_PATH}:/opt/airflow
+      - ${AIRFLOW_DAGS_PATH}:/opt/airflow/dags
+      - ${AIRFLOW_LOGS_PATH}:/opt/airflow/logs
+      - ${AIRFLOW_PLUGINS_PATH}:/opt/airflow/plugins
     ports:
       - "${AIRFLOW_PORT}:8080"
     command: >
@@ -64,6 +110,11 @@ services:
       "
     networks:
       - shared-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   # Airflow Scheduler (separate container)
   airflow-scheduler:
@@ -71,48 +122,130 @@ services:
     container_name: airflow-scheduler-container
     restart: always
     depends_on:
-      - postgres
-      - airflow-init
+      postgres_internal:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
     environment:
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
-      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal/${POSTGRES_INTERNAL_DB}
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY}
     volumes:
       - ${AIRFLOW_DATA_PATH}:/opt/airflow
+      - ${AIRFLOW_DAGS_PATH}:/opt/airflow/dags
+      - ${AIRFLOW_LOGS_PATH}:/opt/airflow/logs
+      - ${AIRFLOW_PLUGINS_PATH}:/opt/airflow/plugins
     command: airflow scheduler
     networks:
       - shared-network
 
   # Python Container for DBT Development
   python:
-    image: python:3.11-slim
-    container_name: python-dbt-container  # Changed for clarity
-    restart: always
+    image: python:3.12-slim
+    container_name: python-dbt-container
+    restart: unless-stopped
     volumes:
-      - ${DBT_PYTHON_DATA_PATH}:/dbt-workspace
-      - ./requirements.txt:/tmp/requirements.txt  # Mount requirements.txt
+      - ${DBT_WORKSPACE_PATH}:/dbt-workspace
+      - ./requirements.txt:/tmp/requirements.txt
+      - ${DBT_PROJECTS_PATH}:/dbt-workspace/dbt-projects
     working_dir: /dbt-workspace
     command: >
-      sh -c "
-        # Upgrade pip first
+      bash -c "
         pip install --upgrade pip &&
-        
-        # Install packages from requirements.txt
-        if [ -f /tmp/requirements.txt ]; then
-          echo 'Installing packages from requirements.txt...' &&
-          pip install -r /tmp/requirements.txt;
-        else
-          echo 'Warning: requirements.txt not found at /tmp/requirements.txt' &&
-          echo 'Installing default DBT packages...' &&
-          pip install dbt-core dbt-snowflake;
-        fi &&
-        
-        # Keep container running
-        echo 'DBT development environment ready!' &&
+        pip install -r /tmp/requirements.txt &&
+        echo 'Python and DBT environment is ready!' &&
+        echo 'You can access it with: docker exec -it python-dbt-container bash' &&
         tail -f /dev/null
       "
     networks:
       - shared-network
+
+  # Apache Superset Database Initialization (FIXED VERSION)
+  superset-init:
+    image: apache/superset:6.0.0
+    container_name: superset-init-container
+    depends_on:
+      postgres_internal:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      SUPERSET_SECRET_KEY: ${SUPERSET_SECRET_KEY}
+      # CORRECT: Use SUPERSET_DATABASE_URI for Superset 6.0.0
+      SUPERSET_DATABASE_URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      # Also set the older variable for compatibility
+      SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}
+    command: >
+      bash -c "
+        # Wait for PostgreSQL to be ready
+        sleep 15 &&
+        echo '=== Starting Superset Initialization ===' &&
+        echo 'Database URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:*****@postgres_internal:5432/${SUPERSET_DB}' &&
+        # Force PostgreSQL connection by setting environment
+        export SUPERSET_DATABASE_URI='postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}' &&
+        export SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}' &&
+        # Initialize database
+        superset db upgrade &&
+        # Create admin user (single line to avoid bash issues)
+        superset fab create-admin --username admin --firstname Superset --lastname Admin --email admin@superset.com --password admin &&
+        # Initialize Superset
+        superset init &&
+        echo '=== Superset Initialization Complete ==='
+      "
+    networks:
+      - shared-network
+
+  # Apache Superset Webserver (FIXED VERSION)
+  superset:
+    image: apache/superset:6.0.0
+    container_name: superset-container
+    restart: always
+    depends_on:
+      postgres_internal:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      superset-init:
+        condition: service_completed_successfully
+    environment:
+      SUPERSET_SECRET_KEY: ${SUPERSET_SECRET_KEY}
+      # CORRECT: Use SUPERSET_DATABASE_URI for Superset 6.0.0
+      SUPERSET_DATABASE_URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      # Also set the older variable for compatibility
+      SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}
+      # Force PostgreSQL with config file
+      SUPERSET_CONFIG_PATH: /app/pythonpath/superset_config.py
+    volumes:
+      - ${SUPERSET_DATA_PATH}:/app/superset_home
+      # Mount config file to force PostgreSQL
+      - ./superset-config:/app/pythonpath
+    ports:
+      - "${SUPERSET_PORT}:8088"
+    command: >
+      bash -c "
+        # Set environment variables explicitly
+        export SUPERSET_DATABASE_URI='postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}' &&
+        export SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}' &&
+        # Start Gunicorn
+        gunicorn --bind 0.0.0.0:8088 \
+          --workers 4 \
+          --timeout 120 \
+          --limit-request-line 0 \
+          --limit-request-field_size 0 \
+          'superset.app:create_app()'
+      "
+    networks:
+      - shared-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8088/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
 networks:
   shared-network:
