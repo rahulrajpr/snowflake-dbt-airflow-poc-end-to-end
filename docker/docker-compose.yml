@@ -1,0 +1,119 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:13
+    container_name: postgres-container
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - ${POSTGRES_DATA_PATH}:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - shared-network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
+      interval: 5s
+      retries: 5
+
+  # Airflow Database Initialization (runs once)
+  airflow-init:
+    image: apache/airflow:2.8.1
+    container_name: airflow-init-container
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    command: >
+      bash -c "
+        airflow db init &&
+        airflow users create --username ${AIRFLOW_ADMIN_USERNAME} --password ${AIRFLOW_ADMIN_PASSWORD} --firstname Admin --lastname User --role Admin --email admin@example.com
+      "
+    networks:
+      - shared-network
+
+  # Apache Airflow Container
+  airflow:
+    image: apache/airflow:2.8.1
+    container_name: airflow-container
+    restart: always
+    depends_on:
+      - postgres
+      - airflow-init
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__FERNET_KEY=
+    volumes:
+      - ${AIRFLOW_DATA_PATH}:/opt/airflow
+    ports:
+      - "${AIRFLOW_PORT}:8080"
+    command: >
+      bash -c "
+        airflow db upgrade &&
+        airflow webserver --port 8080
+      "
+    networks:
+      - shared-network
+
+  # Airflow Scheduler (separate container)
+  airflow-scheduler:
+    image: apache/airflow:2.8.1
+    container_name: airflow-scheduler-container
+    restart: always
+    depends_on:
+      - postgres
+      - airflow-init
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    volumes:
+      - ${AIRFLOW_DATA_PATH}:/opt/airflow
+    command: airflow scheduler
+    networks:
+      - shared-network
+
+  # Python Container for DBT Development
+  python:
+    image: python:3.11-slim
+    container_name: python-dbt-container  # Changed for clarity
+    restart: always
+    volumes:
+      - ${DBT_PYTHON_DATA_PATH}:/dbt-workspace
+      - ./requirements.txt:/tmp/requirements.txt  # Mount requirements.txt
+    working_dir: /dbt-workspace
+    command: >
+      sh -c "
+        # Upgrade pip first
+        pip install --upgrade pip &&
+        
+        # Install packages from requirements.txt
+        if [ -f /tmp/requirements.txt ]; then
+          echo 'Installing packages from requirements.txt...' &&
+          pip install -r /tmp/requirements.txt;
+        else
+          echo 'Warning: requirements.txt not found at /tmp/requirements.txt' &&
+          echo 'Installing default DBT packages...' &&
+          pip install dbt-core dbt-snowflake;
+        fi &&
+        
+        # Keep container running
+        echo 'DBT development environment ready!' &&
+        tail -f /dev/null
+      "
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    driver: bridge

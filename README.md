@@ -1,1 +1,0 @@
-# snowflake-dbt-airflow-poc-end-to-end
