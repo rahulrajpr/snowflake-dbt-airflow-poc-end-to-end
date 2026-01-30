@@ -163,7 +163,7 @@ services:
 
   # Apache Superset Database Initialization (FIXED VERSION)
   superset-init:
-    image: apache/superset:6.0.0
+    image: apache/superset:6.0.0-dev
     container_name: superset-init-container
     depends_on:
       postgres_internal:
@@ -172,21 +172,18 @@ services:
         condition: service_healthy
     environment:
       SUPERSET_SECRET_KEY: ${SUPERSET_SECRET_KEY}
-      # CORRECT: Use SUPERSET_DATABASE_URI for Superset 6.0.0
-      SUPERSET_DATABASE_URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}
+      SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}
+      SUPERSET_CONFIG_PATH: /app/pythonpath/superset_config.py
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      # Also set the older variable for compatibility
-      SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}
+    volumes:
+      - ./superset-config:/app/pythonpath
     command: >
       bash -c "
         # Wait for PostgreSQL to be ready
         sleep 15 &&
         echo '=== Starting Superset Initialization ===' &&
         echo 'Database URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:*****@postgres_internal:5432/${SUPERSET_DB}' &&
-        # Force PostgreSQL connection by setting environment
-        export SUPERSET_DATABASE_URI='postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}' &&
-        export SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}' &&
         # Initialize database
         superset db upgrade &&
         # Create admin user (single line to avoid bash issues)
@@ -200,7 +197,7 @@ services:
 
   # Apache Superset Webserver (FIXED VERSION)
   superset:
-    image: apache/superset:6.0.0
+    image: apache/superset:6.0.0-dev
     container_name: superset-container
     restart: always
     depends_on:
@@ -212,33 +209,28 @@ services:
         condition: service_completed_successfully
     environment:
       SUPERSET_SECRET_KEY: ${SUPERSET_SECRET_KEY}
-      # CORRECT: Use SUPERSET_DATABASE_URI for Superset 6.0.0
-      SUPERSET_DATABASE_URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}
+      SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}
+      SUPERSET_CONFIG_PATH: /app/pythonpath/superset_config.py
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      # Also set the older variable for compatibility
-      SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}
-      # Force PostgreSQL with config file
-      SUPERSET_CONFIG_PATH: /app/pythonpath/superset_config.py
     volumes:
       - ${SUPERSET_DATA_PATH}:/app/superset_home
-      # Mount config file to force PostgreSQL
       - ./superset-config:/app/pythonpath
     ports:
       - "${SUPERSET_PORT}:8088"
-    command: >
-      bash -c "
-        # Set environment variables explicitly
-        export SUPERSET_DATABASE_URI='postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}' &&
-        export SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal:5432/${SUPERSET_DB}' &&
-        # Start Gunicorn
-        gunicorn --bind 0.0.0.0:8088 \
-          --workers 4 \
-          --timeout 120 \
-          --limit-request-line 0 \
-          --limit-request-field_size 0 \
-          'superset.app:create_app()'
-      "
+    command:
+      - gunicorn
+      - --bind
+      - "0.0.0.0:8088"
+      - --workers
+      - "4"
+      - --timeout
+      - "120"
+      - --limit-request-line
+      - "0"
+      - --limit-request-field_size
+      - "0"
+      - "superset.app:create_app()"
     networks:
       - shared-network
     healthcheck:
