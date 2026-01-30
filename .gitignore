@@ -1,0 +1,3 @@
+persistent-store/postgres-data/
+persistent-store/postgres-internal-data/
+persistent-store/airflow-data/logs/
