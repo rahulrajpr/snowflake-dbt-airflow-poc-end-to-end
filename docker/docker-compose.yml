@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # PostgreSQL Internal - For Airflow & Superset metadata
   postgres_internal:
@@ -26,7 +24,7 @@ services:
   # PostgreSQL - For Business Database Operations
   postgres:
     image: postgres:17.7-alpine
-    container_name: postgres-container
+    container_name: postgres-business-container
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -84,7 +82,7 @@ services:
   # Apache Airflow Container
   airflow:
     image: apache/airflow:2.8.1
-    container_name: airflow-container
+    container_name: apache-airflow-container
     restart: always
     depends_on:
       postgres_internal:
@@ -147,13 +145,13 @@ services:
     restart: unless-stopped
     volumes:
       - ${DBT_WORKSPACE_PATH}:/dbt-workspace
-      - ./requirements.txt:/tmp/requirements.txt
+      - ./requirements-dbt.txt:/tmp/requirements-dbt.txt
       - ${DBT_PROJECTS_PATH}:/dbt-workspace/dbt-projects
     working_dir: /dbt-workspace
     command: >
       bash -c "
         pip install --upgrade pip &&
-        pip install -r /tmp/requirements.txt &&
+        pip install -r /tmp/requirements-dbt.txt &&
         echo 'Python and DBT environment is ready!' &&
         echo 'You can access it with: docker exec -it python-dbt-container bash' &&
         tail -f /dev/null
@@ -161,7 +159,7 @@ services:
     networks:
       - shared-network
 
-  # Apache Superset Database Initialization (FIXED VERSION)
+  # Apache Superset Database Initialization - SIMPLIFIED VERSION
   superset-init:
     image: apache/superset:6.0.0-dev
     container_name: superset-init-container
@@ -176,17 +174,20 @@ services:
       SUPERSET_CONFIG_PATH: /app/pythonpath/superset_config.py
       REDIS_HOST: redis
       REDIS_PORT: 6379
+    user: "root"  # Run as root to avoid permission issues
     volumes:
       - ./superset-config:/app/pythonpath
     command: >
       bash -c "
         # Wait for PostgreSQL to be ready
         sleep 15 &&
+        echo '=== Installing Snowflake connector ===' &&
+        pip install --no-cache-dir snowflake-sqlalchemy==1.6.1 cryptography==42.0.5 &&
         echo '=== Starting Superset Initialization ===' &&
         echo 'Database URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:*****@postgres_internal:5432/${SUPERSET_DB}' &&
         # Initialize database
         superset db upgrade &&
-        # Create admin user (single line to avoid bash issues)
+        # Create admin user
         superset fab create-admin --username admin --firstname Superset --lastname Admin --email admin@superset.com --password admin &&
         # Initialize Superset
         superset init &&
@@ -195,7 +196,7 @@ services:
     networks:
       - shared-network
 
-  # Apache Superset Webserver (FIXED VERSION)
+  # Apache Superset Webserver - FIXED COMMAND SYNTAX
   superset:
     image: apache/superset:6.0.0-dev
     container_name: superset-container
@@ -213,24 +214,17 @@ services:
       SUPERSET_CONFIG_PATH: /app/pythonpath/superset_config.py
       REDIS_HOST: redis
       REDIS_PORT: 6379
+    user: "superset"  # Run as superset user (default)
     volumes:
       - ${SUPERSET_DATA_PATH}:/app/superset_home
       - ./superset-config:/app/pythonpath
     ports:
       - "${SUPERSET_PORT}:8088"
-    command:
-      - gunicorn
-      - --bind
-      - "0.0.0.0:8088"
-      - --workers
-      - "4"
-      - --timeout
-      - "120"
-      - --limit-request-line
-      - "0"
-      - --limit-request-field_size
-      - "0"
-      - "superset.app:create_app()"
+    command: >
+      bash -c "
+        echo '=== Starting Superset Server ===' &&
+        gunicorn --bind '0.0.0.0:8088' --workers 4 --timeout 120 --limit-request-line 0 --limit-request-field_size 0 'superset.app:create_app()'
+      "
     networks:
       - shared-network
     healthcheck:
