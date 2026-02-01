@@ -182,3 +182,34 @@ io.grpc.StatusRuntimeException: NOT_FOUND: Namespace default is not found.
 2026-02-01 07:43:33 [32mINFO[m i.m.r.Micronaut(lambda$start$2):98 - Startup completed in 16753ms. Server Running: http://1a6cb4af4bf1:9000
 2026-02-01 08:36:24 [32mINFO[m i.a.w.ApplicationInitializer(configureTemporal):322 - Configuring Temporal....
 2026-02-01 08:36:24 [32mINFO[m i.a.c.t.TemporalUtils(configureTemporalNamespace):186 - Workflow execution TTL already set for namespace default. Remains unchanged as: 30 days
+2026-02-01 08:39:12 [32mINFO[m i.a.w.ApplicationInitializer(configureTemporal):322 - Configuring Temporal....
+2026-02-01 08:39:12 [32mINFO[m i.a.c.t.TemporalUtils(configureTemporalNamespace):186 - Workflow execution TTL already set for namespace default. Remains unchanged as: 30 days
+2026-02-01 08:39:17 [32mINFO[m i.a.w.ApplicationInitializer(registerWorkerFactory):182 - Registering worker factories....
+2026-02-01 08:39:17 [32mINFO[m i.a.w.ApplicationInitializer(registerGetSpec):278 - Get Spec Workflow registered.
+2026-02-01 08:39:17 [32mINFO[m i.a.w.ApplicationInitializer(registerCheckConnection):231 - Check Connection Workflow registered.
+2026-02-01 08:39:17 [32mINFO[m i.a.w.ApplicationInitializer(registerDiscover):264 - Discover Workflow registered.
+2026-02-01 08:39:17 [32mINFO[m i.a.w.ApplicationInitializer(registerSync):291 - Registering sync workflow for task queue 'SYNC'...
+2026-02-01 08:39:17 [32mINFO[m i.a.w.ApplicationInitializer(registerSync):301 - Sync Workflow registered.
+2026-02-01 08:39:17 [32mINFO[m i.a.w.ApplicationInitializer(registerConnectionManager):247 - Connection Manager Workflow registered.
+2026-02-01 08:39:17 [32mINFO[m i.a.w.ApplicationInitializer(registerNotification):209 - registering new notification workflow
+2026-02-01 08:39:17 [32mINFO[m i.a.w.ApplicationInitializer(onApplicationEvent):149 - Starting worker factory...
+2026-02-01 08:39:17 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Workflow Poller taskQueue="DISCOVER_SCHEMA", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:17 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Local Activity Poller taskQueue="DISCOVER_SCHEMA", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:17 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Activity Poller taskQueue="DISCOVER_SCHEMA", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:17 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Workflow Poller taskQueue="NOTIFY", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:17 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Local Activity Poller taskQueue="NOTIFY", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:17 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Activity Poller taskQueue="NOTIFY", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:17 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Workflow Poller taskQueue="CONNECTION_UPDATER", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:17 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Local Activity Poller taskQueue="CONNECTION_UPDATER", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:17 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Activity Poller taskQueue="CONNECTION_UPDATER", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:17 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Workflow Poller taskQueue="CHECK_CONNECTION", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:17 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Local Activity Poller taskQueue="CHECK_CONNECTION", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:17 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Activity Poller taskQueue="CHECK_CONNECTION", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:18 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Workflow Poller taskQueue="SYNC", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:18 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Local Activity Poller taskQueue="SYNC", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:18 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Activity Poller taskQueue="SYNC", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:18 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Workflow Poller taskQueue="GET_SPEC", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:18 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Local Activity Poller taskQueue="GET_SPEC", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:18 [32mINFO[m i.t.i.w.Poller(start):91 - start: Poller{name=Activity Poller taskQueue="GET_SPEC", namespace="default", identity=1@5accdf8a2c9c}
+2026-02-01 08:39:18 [32mINFO[m i.a.w.ApplicationInitializer(onApplicationEvent):152 - Application initialized.
+2026-02-01 08:39:18 [32mINFO[m i.m.r.Micronaut(lambda$start$2):98 - Startup completed in 16993ms. Server Running: http://5accdf8a2c9c:9000
