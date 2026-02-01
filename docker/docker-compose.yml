@@ -335,7 +335,7 @@ services:
       TEMPORAL_HOST: airbyte-temporal:7233
       TRACKING_STRATEGY: logging
       WEBAPP_URL: ${WEBAPP_URL}
-      WORKER_ENVIRONMENT: docker
+      WORKER_ENVIRONMENT: local                                          # Changed: docker -> local
       LOG_LEVEL: INFO
       AUTO_DETECT_SCHEMA: "true"
       MICRONAUT_ENVIRONMENTS: control-plane
@@ -392,7 +392,7 @@ services:
       LOCAL_ROOT: /tmp/airbyte_local
       TEMPORAL_HOST: airbyte-temporal:7233
       TRACKING_STRATEGY: logging
-      WORKER_ENVIRONMENT: docker
+      WORKER_ENVIRONMENT: local                                          # Changed: docker -> local
       LOG_LEVEL: INFO
       INTERNAL_API_HOST: airbyte-server:8001
       AUTO_DETECT_SCHEMA: "true"
@@ -407,7 +407,7 @@ services:
     volumes:
       - ${AIRBYTE_CONFIG_PATH}:/configs
       - ${AIRBYTE_WORKSPACE_PATH}:/workspace
-      - /var/run/docker.sock:/var/run/docker.sock
+      # Removed: /var/run/docker.sock:/var/run/docker.sock  — not needed in local mode
     networks:
       - shared-network
 

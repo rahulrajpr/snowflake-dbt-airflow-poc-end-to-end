@@ -1,0 +1,42 @@
+2026-02-01 10:21:00 [32mINFO[m i.a.w.t.TemporalAttemptExecution(get):124 - Docker volume job log path: /workspace/f394ca69-5653-4032-82df-bdade08cb0a7/0/logs.log
+2026-02-01 10:21:00 [32mINFO[m i.a.w.t.TemporalAttemptExecution(get):129 - Executing worker wrapper. Airbyte version: 0.50.33
+2026-02-01 10:21:00 [32mINFO[m i.a.a.c.AirbyteApiClient(retryWithJitterThrows):290 - Attempt 0 to save workflow id for cancellation
+2026-02-01 10:21:00 [32mINFO[m i.a.c.i.LineGobbler(voidCall):149 - 
+2026-02-01 10:21:00 [32mINFO[m i.a.c.i.LineGobbler(voidCall):149 - ----- START CHECK -----
+2026-02-01 10:21:00 [32mINFO[m i.a.c.i.LineGobbler(voidCall):149 - 
+2026-02-01 10:21:00 [32mINFO[m i.a.c.EnvConfigs(getEnvOrDefault):1158 - Using default value for environment variable SIDECAR_KUBE_CPU_LIMIT: '2.0'
+2026-02-01 10:21:00 [32mINFO[m i.a.c.EnvConfigs(getEnvOrDefault):1158 - Using default value for environment variable SOCAT_KUBE_CPU_LIMIT: '2.0'
+2026-02-01 10:21:00 [32mINFO[m i.a.c.EnvConfigs(getEnvOrDefault):1158 - Using default value for environment variable SIDECAR_KUBE_CPU_REQUEST: '0.1'
+2026-02-01 10:21:00 [32mINFO[m i.a.c.EnvConfigs(getEnvOrDefault):1158 - Using default value for environment variable SOCAT_KUBE_CPU_REQUEST: '0.1'
+2026-02-01 10:21:00 [32mINFO[m i.a.c.EnvConfigs(getEnvOrDefault):1158 - Using default value for environment variable LAUNCHDARKLY_KEY: ''
+2026-02-01 10:21:00 [32mINFO[m i.a.c.EnvConfigs(getEnvOrDefault):1158 - Using default value for environment variable FEATURE_FLAG_CLIENT: ''
+2026-02-01 10:21:00 [32mINFO[m i.a.c.EnvConfigs(getEnvOrDefault):1158 - Using default value for environment variable OTEL_COLLECTOR_ENDPOINT: ''
+2026-02-01 10:21:00 [32mINFO[m i.a.c.i.LineGobbler(voidCall):149 - Checking if airbyte/source-postgres:3.2.13 exists...
+2026-02-01 10:21:01 [32mINFO[m i.a.c.i.LineGobbler(voidCall):149 - airbyte/source-postgres:3.2.13 not found locally. Attempting to pull the image...
+2026-02-01 10:21:01 [32mINFO[m i.a.c.i.LineGobbler(voidCall):149 - Image does not exist.
+2026-02-01 10:21:01 [1;31mERROR[m i.a.w.g.DefaultCheckConnectionWorker(run):133 - Unexpected error while checking connection: 
+io.airbyte.workers.exception.WorkerException: Could not find image: airbyte/source-postgres:3.2.13
+	at io.airbyte.workers.process.DockerProcessFactory.create(DockerProcessFactory.java:117) ~[io.airbyte-airbyte-commons-worker-0.50.33.jar:?]
+	at io.airbyte.workers.process.AirbyteIntegrationLauncher.check(AirbyteIntegrationLauncher.java:143) ~[io.airbyte-airbyte-commons-worker-0.50.33.jar:?]
+	at io.airbyte.workers.general.DefaultCheckConnectionWorker.run(DefaultCheckConnectionWorker.java:71) ~[io.airbyte-airbyte-commons-worker-0.50.33.jar:?]
+	at io.airbyte.workers.general.DefaultCheckConnectionWorker.run(DefaultCheckConnectionWorker.java:44) ~[io.airbyte-airbyte-commons-worker-0.50.33.jar:?]
+	at io.airbyte.workers.temporal.TemporalAttemptExecution.get(TemporalAttemptExecution.java:135) ~[io.airbyte-airbyte-workers-0.50.33.jar:?]
+	at io.airbyte.workers.temporal.check.connection.CheckConnectionActivityImpl.lambda$runWithJobOutput$1(CheckConnectionActivityImpl.java:136) ~[io.airbyte-airbyte-workers-0.50.33.jar:?]
+	at io.airbyte.commons.temporal.TemporalUtils.withBackgroundHeartbeat(TemporalUtils.java:314) ~[io.airbyte-airbyte-commons-temporal-0.50.33.jar:?]
+	at io.airbyte.workers.temporal.check.connection.CheckConnectionActivityImpl.runWithJobOutput(CheckConnectionActivityImpl.java:121) ~[io.airbyte-airbyte-workers-0.50.33.jar:?]
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:578) ~[?:?]
+	at io.temporal.internal.activity.RootActivityInboundCallsInterceptor$POJOActivityInboundCallsInterceptor.executeActivity(RootActivityInboundCallsInterceptor.java:64) ~[temporal-sdk-1.17.0.jar:?]
+	at io.temporal.internal.activity.RootActivityInboundCallsInterceptor.execute(RootActivityInboundCallsInterceptor.java:43) ~[temporal-sdk-1.17.0.jar:?]
+	at io.temporal.internal.activity.ActivityTaskExecutors$BaseActivityTaskExecutor.execute(ActivityTaskExecutors.java:95) ~[temporal-sdk-1.17.0.jar:?]
+	at io.temporal.internal.activity.ActivityTaskHandlerImpl.handle(ActivityTaskHandlerImpl.java:92) ~[temporal-sdk-1.17.0.jar:?]
+	at io.temporal.internal.worker.ActivityWorker$TaskHandlerImpl.handleActivity(ActivityWorker.java:241) ~[temporal-sdk-1.17.0.jar:?]
+	at io.temporal.internal.worker.ActivityWorker$TaskHandlerImpl.handle(ActivityWorker.java:206) ~[temporal-sdk-1.17.0.jar:?]
+	at io.temporal.internal.worker.ActivityWorker$TaskHandlerImpl.handle(ActivityWorker.java:179) ~[temporal-sdk-1.17.0.jar:?]
+	at io.temporal.internal.worker.PollTaskExecutor.lambda$process$0(PollTaskExecutor.java:93) ~[temporal-sdk-1.17.0.jar:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1589) ~[?:?]
+2026-02-01 10:21:01 [32mINFO[m i.a.c.i.LineGobbler(voidCall):149 - 
+2026-02-01 10:21:01 [32mINFO[m i.a.c.i.LineGobbler(voidCall):149 - ----- END CHECK -----
+2026-02-01 10:21:01 [32mINFO[m i.a.c.i.LineGobbler(voidCall):149 - 
