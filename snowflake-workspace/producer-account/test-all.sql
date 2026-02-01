@@ -1,3 +1,5 @@
+
+
 create or replace warehouse poc_injestion_warehouse
 with 
 warehouse_size = small
