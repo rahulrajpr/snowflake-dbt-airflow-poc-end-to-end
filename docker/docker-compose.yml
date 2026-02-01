@@ -159,7 +159,7 @@ services:
     networks:
       - shared-network
 
-  # Apache Superset Database Initialization - SIMPLIFIED VERSION
+  # Apache Superset Database Initialization
   superset-init:
     image: apache/superset:6.0.0-dev
     container_name: superset-init-container
@@ -174,29 +174,25 @@ services:
       SUPERSET_CONFIG_PATH: /app/pythonpath/superset_config.py
       REDIS_HOST: redis
       REDIS_PORT: 6379
-    user: "root"  # Run as root to avoid permission issues
+    user: "root"
     volumes:
       - ./superset-config:/app/pythonpath
     command: >
       bash -c "
-        # Wait for PostgreSQL to be ready
         sleep 15 &&
         echo '=== Installing Snowflake connector ===' &&
-        pip install --no-cache-dir snowflake-sqlalchemy==1.6.1 cryptography==42.0.5 &&
+        pip install --no-cache-dir snowflake-sqlalchemy==1.8.2 snowflake-connector-python==4.2.0 &&
         echo '=== Starting Superset Initialization ===' &&
         echo 'Database URI: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:*****@postgres_internal:5432/${SUPERSET_DB}' &&
-        # Initialize database
         superset db upgrade &&
-        # Create admin user
         superset fab create-admin --username admin --firstname Superset --lastname Admin --email admin@superset.com --password admin &&
-        # Initialize Superset
         superset init &&
         echo '=== Superset Initialization Complete ==='
       "
     networks:
       - shared-network
 
-  # Apache Superset Webserver - FIXED COMMAND SYNTAX
+  # Apache Superset Webserver
   superset:
     image: apache/superset:6.0.0-dev
     container_name: superset-container
@@ -214,7 +210,7 @@ services:
       SUPERSET_CONFIG_PATH: /app/pythonpath/superset_config.py
       REDIS_HOST: redis
       REDIS_PORT: 6379
-    user: "superset"  # Run as superset user (default)
+    user: "root"
     volumes:
       - ${SUPERSET_DATA_PATH}:/app/superset_home
       - ./superset-config:/app/pythonpath
@@ -222,6 +218,8 @@ services:
       - "${SUPERSET_PORT}:8088"
     command: >
       bash -c "
+        echo '=== Installing Snowflake connector ===' &&
+        pip install --no-cache-dir snowflake-sqlalchemy==1.8.2 snowflake-connector-python==4.2.0 &&
         echo '=== Starting Superset Server ===' &&
         gunicorn --bind '0.0.0.0:8088' --workers 4 --timeout 120 --limit-request-line 0 --limit-request-field_size 0 'superset.app:create_app()'
       "
