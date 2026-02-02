@@ -1,4 +1,4 @@
-# Snowflake + dbt + Airflow + PostgreSQL + Airbyte + Superset Financial Data Platform POC (10-Day Plan)
+# Snowflake + dbt + Airflow + PostgreSQL + Meltano + Superset Financial Data Platform POC (10-Day Plan)
 
 ## 1. Background & Objective
 
@@ -19,7 +19,7 @@ I am a Principal Data Engineer who has recently completed internal technical tra
 
 | # | Software | Purpose | Installation |
 |---|----------|---------|--------------|
-| 1 | Docker Desktop | Runs Airflow, Airbyte, PostgreSQL, Superset, dbt containers | Download from docker.com |
+| 1 | Docker Desktop | Runs Airflow, Meltano, PostgreSQL, Superset, dbt containers | Download from docker.com |
 | 2 | Python 3.10 | Core programming language (optional - for local scripts) | Download from python.org |
 | 3 | Git | Version control | Download from git-scm.com |
 | 4 | VS Code | Code editor | Download from code.visualstudio.com |
@@ -42,7 +42,7 @@ I am a Principal Data Engineer who has recently completed internal technical tra
 | Technology | Purpose | Why Chosen |
 |------------|---------|------------|
 | PostgreSQL (Docker) | Source transactional database | Simulates enterprise OLTP system, enables CDC demonstration |
-| Airbyte (Docker) | ELT ingestion from PostgreSQL to Snowflake | Demonstrates modern data integration, handles schema evolution |
+| Meltano (Docker) | ELT ingestion from PostgreSQL to Snowflake | Lightweight, code-based configuration, Singer ecosystem compatibility, simpler operational footprint |
 | GCP Cloud Storage | Landing zone for external data | Free tier available, enterprise-grade object storage |
 | Snowflake | Enterprise data warehouse & transformation | Core evaluation focus, handles structured/semi-structured data |
 | dbt Core (Docker) | Analytics engineering & transformation | Containerized for consistency, easy version management |
@@ -55,7 +55,7 @@ I am a Principal Data Engineer who has recently completed internal technical tra
 |----------|---------------|--------------------------|
 | Everything in Docker except GCP/Snowflake | Consistent environment, easy setup/teardown, no local dependency conflicts | Production would use managed services for reliability |
 | PostgreSQL locally via Docker | Simulates source system without cloud costs. Enables CDC demonstration via logical replication | Production would use managed PostgreSQL (Cloud SQL, RDS) |
-| Airbyte for ingestion | Handles schema evolution, incremental syncs, and error handling out-of-the-box | Production would use Airbyte Cloud or enterprise deployment |
+| Meltano for ingestion | Lightweight ELT framework with declarative configuration, built on Singer taps/targets, seamless Airflow integration | Production would use Meltano Cloud or containerized deployment with version control |
 | GCP over AWS | GCP's $300 free tier offers more services. BigQuery available for staging layer option | Both are enterprise-viable. GCP's data ecosystem integrates well |
 | Snowflake as central warehouse | Required for evaluation. Superior performance for analytics workloads | Production would leverage Enterprise edition |
 | dbt in Docker | Consistent runtime environment, easy to share across team members | Production would use dbt Cloud for CI/CD and collaboration |
@@ -81,18 +81,18 @@ I am a Principal Data Engineer who has recently completed internal technical tra
 
 | Source | Format | Ingestion Pattern | Business Purpose |
 |--------|--------|-------------------|------------------|
-| PostgreSQL Transactions | Tables | Airbyte CDC (Logical Replication) | Investor activity simulation, real transactional data |
+| PostgreSQL Transactions | Tables | Meltano incremental sync (state-based bookmarking) | Investor activity simulation, real transactional data |
 | Mutual Fund NAV | CSV | GCS → Snowpipe | Core pricing data, updates daily |
-| Fund Metadata | CSV | Airbyte batch sync | Fund characteristics, slow-changing |
+| Fund Metadata | CSV | Meltano batch sync | Fund characteristics, slow-changing |
 | Market Prices (Index) | JSON (Mock API) | Python → GCS → Snowpipe | Benchmark comparison data |
-| Fund Manager Info | CSV | Airbyte with SCD Type 2 | Slowly changing dimension demo |
+| Fund Manager Info | CSV | Meltano with SCD Type 2 | Slowly changing dimension demo |
 | Reference Data | Static CSV | dbt Seeds | Calendar, Currency codes |
-| External Ratings Data | JSON | Airbyte API connector (simulated) | Fund ratings from external source |
+| External Ratings Data | JSON | Meltano API connector (simulated) | Fund ratings from external source |
 
 ### Ingestion Patterns Demonstrated:
-- CDC from PostgreSQL (change data capture)
+- Incremental extraction from PostgreSQL (timestamp-based change tracking)
 - Batch synchronization (full/incremental)
-- API ingestion (simulated via Airbyte)
+- API ingestion (simulated via Meltano)
 - Event-driven micro-batch (Snowpipe)
 - Idempotent processing patterns
 
@@ -102,7 +102,7 @@ I am a Principal Data Engineer who has recently completed internal technical tra
 
 ```text
 PostgreSQL (Docker - Source) 
-    → Airbyte (Docker - CDC/Batch ELT) 
+    → Meltano (Docker - ELT via Singer taps/targets) 
     → GCS (Landing Zone) 
     → Snowflake RAW (via Snowpipe)
     → dbt (Docker - Transformation: Staging → Intermediate → Marts)
@@ -119,27 +119,28 @@ Apache Airflow (Docker - Orchestration)
 
 ### Simulated Banking Schema:
 - Core transactional tables: investors, accounts, transactions
-- Logical replication enabled for CDC capability
+- Timestamp columns (updated_at) for incremental extraction
 - Realistic financial data model with referential integrity
 
 
 
-## 8. Airbyte Implementation Strategy
+## 8. Meltano Implementation Strategy
 
 ### Connection Configuration:
-- **Source:** PostgreSQL (with logical replication for CDC)
-- **Destination:** Snowflake RAW layer
+- **Source:** PostgreSQL (tap-postgres extractor)
+- **Destination:** Snowflake RAW layer (target-snowflake loader)
 - **Sync Mode:**
   - Full refresh for static tables
-  - Incremental (append) for transaction tables
-  - CDC for investor/account dimensions
+  - Incremental (state-based) for transaction tables
+  - Timestamp-based bookmarking for investor/account dimensions
 
-### Airbyte Features Demonstrated:
+### Meltano Features Demonstrated:
+- Declarative configuration via meltano.yml
+- State management for incremental loads
 - Schema evolution handling
-- Normalization to Snowflake native tables
-- Error handling and automatic retries
-- Connection scheduling via Airflow API
-- Data type mapping between PostgreSQL and Snowflake
+- Error handling and state preservation on failures
+- Connection orchestration via Airflow
+- Environment-specific configuration management
 
 ## 9. dbt Implementation Strategy (Dockerized)
 
@@ -173,7 +174,7 @@ models/
 **Design Philosophy:** Airflow as pure orchestrator, triggers all Docker services, manages dependencies.
 
 ### Enhanced DAG Structure:
-- Trigger Airbyte syncs for PostgreSQL to Snowflake
+- Trigger Meltano syncs for PostgreSQL to Snowflake
 - Check GCS for new files using sensors
 - Trigger Snowpipe auto-ingest from GCS
 - Run dbt transformations (staging then marts)
@@ -209,13 +210,13 @@ models/
 | Tasks | Internal scheduling | Daily aggregation tasks |
 | Materialized Views | Performance optimization | Pre-aggregated investor metrics |
 | Dynamic Data Masking | Column-level security | Mask PII in consumer account |
-| NEW: External Functions | Call external APIs | Integrate with rating service |
+| External Functions | Call external APIs | Integrate with rating service |
 
 ## 13. GCP Infrastructure Setup
 
 ### Minimal GCP Resources:
 - **Cloud Storage Bucket:** fin-data-landing-zone
-- **Folders:** nav-data/, market-data/, airbyte-staging/
+- **Folders:** nav-data/, market-data/, meltano-staging/
 - **Service Account:** snowflake-ingester with HMAC keys
 - **IAM Roles:** Storage Object Admin for Snowpipe
 
@@ -242,21 +243,21 @@ models/
 
 ### Security Implementation:
 - **PostgreSQL:** Row-level security for source data
-- **Airbyte:** Encrypted connections, no data persistence
+- **Meltano:** Encrypted connections, no data persistence
 - **GCP:** Service accounts with least privilege
 - **Snowflake Producer:** Role hierarchy (loader, transformer, viewer)
 - **Snowflake Consumer:** Read-only role + dynamic masking
 - **Superset:** Role-based access to dashboards
 
 ### End-to-End Lineage:
-- Airbyte connection catalog → dbt documentation → Superset datasets
+- Meltano connection catalog → dbt documentation → Superset datasets
 - Complete visibility from PostgreSQL to dashboard
 
 ## 15. Observability & Operations Strategy
 
 ### Four-Layer Observability:
 1. **Source System:** PostgreSQL replication lag, row counts
-2. **Ingestion:** Airbyte sync success/failure, record counts
+2. **Ingestion:** Meltano sync success/failure, record counts
 3. **Transformation:** dbt run results, test failures, model timing
 4. **Consumption:** Superset query performance, dashboard load times
 
@@ -278,12 +279,12 @@ models/
 | Day | Focus Area | Key Deliverables | Success Criteria |
 |-----|-----------|------------------|------------------|
 | 1 | Docker Foundation | Docker Compose setup, PostgreSQL schema, GCP web setup | All containers running, GCS bucket created |
-| 2 | Source & Ingestion | PostgreSQL data simulation, Airbyte connections to Snowflake | CDC working, data flowing to Snowflake RAW |
+| 2 | Source & Ingestion | PostgreSQL data simulation, Meltano connections to Snowflake | Incremental syncs working, data flowing to Snowflake RAW |
 | 3 | External Data | GCS web setup, Snowpipe configuration, file ingestion | Snowpipe auto-ingest working |
 | 4 | dbt Staging Layer | Dockerized dbt, source models, staging transformations | Clean, tested staging models |
 | 5 | dbt Business Logic | Intermediate models, financial calculations, reusable macros | Business logic implemented and tested |
 | 6 | Data Products | Marts creation, star schemas, data sharing setup | Consumer account can query shared data |
-| 7 | Orchestration | Airflow DAGs, Airbyte integration, dependency management | End-to-end pipeline orchestrated |
+| 7 | Orchestration | Airflow DAGs, Meltano integration, dependency management | End-to-end pipeline orchestrated |
 | 8 | Visualization | Superset setup, dashboard creation, semantic layer | Business dashboards operational |
 | 9 | Governance & Security | Tagging, masking policies, row-level security, monitoring | Security controls implemented |
 | 10 | Polish & Narrative | Documentation, walkthrough prep, optimization | Compelling story from PostgreSQL to dashboard |
@@ -302,7 +303,7 @@ The POC is successful if it demonstrates I can:
 
 ### Walkthrough Narrative Structure:
 1. Start with the business dashboard: "Show me yesterday's fund performance and investor activity"
-2. Trace backward through: Superset → Snowflake Consumer → Shared Data → Curated Marts → Staging → Raw Ingestion → Airbyte → PostgreSQL
+2. Trace backward through: Superset → Snowflake Consumer → Shared Data → Curated Marts → Staging → Raw Ingestion → Meltano → PostgreSQL
 3. Highlight key decisions at each layer with "why" explanations
 4. Demonstrate handling of a real-world scenario (e.g., late-arriving transaction)
 5. Show observability across the entire stack
@@ -313,7 +314,7 @@ The POC is successful if it demonstrates I can:
 | Component | POC Implementation | Production Recommendation |
 |-----------|-------------------|---------------------------|
 | PostgreSQL | Docker local | GCP Cloud SQL or AlloyDB with HA |
-| Airbyte | Docker local | Airbyte Cloud or self-hosted K8s |
+| Meltano | Docker local | Meltano Cloud or self-hosted K8s |
 | GCS | Free tier bucket | Multi-region with lifecycle policies |
 | Snowflake | Trial accounts | Enterprise with Business Critical |
 | dbt | Docker container | dbt Cloud with CI/CD |
