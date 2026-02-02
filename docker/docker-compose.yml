@@ -46,27 +46,6 @@ services:
       timeout: 5s
       retries: 5
 
-  # PostgreSQL - For Airbyte Metadata
-  airbyte-postgres:
-    image: postgres:13
-    container_name: airbyte-postgres
-    restart: always
-    environment:
-      POSTGRES_USER: ${POSTGRES_AIRBYTE_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_AIRBYTE_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_AIRBYTE_DB}
-    volumes:
-      - ${AIRBYTE_DB_PATH}:/var/lib/postgresql/data
-    ports:
-      - "5434:5432"
-    networks:
-      - shared-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_AIRBYTE_USER}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   # Redis for Superset caching
   redis:
     image: redis:7.4-alpine
@@ -268,176 +247,58 @@ services:
       timeout: 10s
       retries: 5
 
-  # =================================================================
-  # AIRBYTE
+# =================================================================
+  # MELTANO
   # =================================================================
 
-  # Airbyte Bootloader (runs once)
-  airbyte-bootloader:
-    image: airbyte/bootloader:${AIRBYTE_VERSION}
-    container_name: airbyte-bootloader
+  # Meltano for ELT
+  # =================================================================
+  # MELTANO
+  # =================================================================
+
+  # Meltano for ELT
+  # =================================================================
+  # MELTANO - Pure ELT Engine (No Scheduling, No Transforms)
+  # =================================================================
+
+  meltano:
+    image: meltano/meltano:latest
+    container_name: meltano-container
+    restart: unless-stopped
     depends_on:
-      airbyte-postgres:
+      postgres:
         condition: service_healthy
     environment:
-      AIRBYTE_VERSION: ${AIRBYTE_VERSION}
-      DATABASE_URL: ${DATABASE_URL}
-      DATABASE_USER: ${POSTGRES_AIRBYTE_USER}
-      DATABASE_PASSWORD: ${POSTGRES_AIRBYTE_PASSWORD}
-      DATABASE_DB: ${POSTGRES_AIRBYTE_DB}
-      CONFIG_ROOT: /configs
-      WORKSPACE_ROOT: /workspace
-      LOG_LEVEL: INFO
+      MELTANO_DATABASE_URI: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      MELTANO_PROJECT_ROOT: /project
+      MELTANO_CLI_LOG_LEVEL: info
+      MELTANO_DISABLE_TRACKING: true
     volumes:
-      - ${AIRBYTE_CONFIG_PATH}:/configs
-      - ${AIRBYTE_WORKSPACE_PATH}:/workspace
+      - ${MELTANO_PROJECT_PATH}:/project
+      - ${MELTANO_DATA_PATH}:/meltano-data
+    working_dir: /project
+    entrypoint: ["/bin/bash"]
+    command: 
+      - "-c"
+      - |
+        echo '=== Meltano ELT Engine Started ==='
+        
+        if [ ! -f meltano.yml ]; then
+          echo '=== Initializing Meltano project ==='
+          meltano init . --no_usage_stats
+        fi
+        
+        echo '=== Installing extractors and loaders ==='
+        meltano install || true
+        
+        echo '=== Meltano ready for Airflow orchestration ==='
+        echo 'Connections configured, waiting for Airflow to trigger jobs...'
+        echo 'Run manually: docker exec meltano-container meltano run <extractor> <loader>'
+        
+        tail -f /dev/null
     networks:
       - shared-network
-
-  # Airbyte Temporal
-  airbyte-temporal:
-    image: airbyte/temporal:${AIRBYTE_VERSION}
-    container_name: airbyte-temporal
-    restart: unless-stopped
-    environment:
-      DB: postgresql
-      DB_PORT: 5432
-      POSTGRES_USER: ${POSTGRES_AIRBYTE_USER}
-      POSTGRES_PWD: ${POSTGRES_AIRBYTE_PASSWORD}
-      POSTGRES_SEEDS: airbyte-postgres
-      LOG_LEVEL: INFO
-    depends_on:
-      airbyte-postgres:
-        condition: service_healthy
-      airbyte-bootloader:
-        condition: service_completed_successfully
-    networks:
-      - shared-network
-
-  # Airbyte Server (API)
-  airbyte-server:
-    image: airbyte/server:${AIRBYTE_VERSION}
-    container_name: airbyte-server
-    restart: unless-stopped
-    depends_on:
-      airbyte-bootloader:
-        condition: service_completed_successfully
-      airbyte-temporal:
-        condition: service_started
-    environment:
-      AIRBYTE_VERSION: ${AIRBYTE_VERSION}
-      DATABASE_URL: ${DATABASE_URL}
-      DATABASE_USER: ${POSTGRES_AIRBYTE_USER}
-      DATABASE_PASSWORD: ${POSTGRES_AIRBYTE_PASSWORD}
-      DATABASE_DB: ${POSTGRES_AIRBYTE_DB}
-      CONFIG_ROOT: /configs
-      WORKSPACE_ROOT: /workspace
-      TEMPORAL_HOST: airbyte-temporal:7233
-      TRACKING_STRATEGY: logging
-      WEBAPP_URL: ${WEBAPP_URL}
-      WORKER_ENVIRONMENT: local                                          # Changed: docker -> local
-      LOG_LEVEL: INFO
-      AUTO_DETECT_SCHEMA: "true"
-      MICRONAUT_ENVIRONMENTS: control-plane
-      CONFIGS_DATABASE_MINIMUM_FLYWAY_MIGRATION_VERSION: 0.35.15.001
-      JOBS_DATABASE_MINIMUM_FLYWAY_MIGRATION_VERSION: 0.29.15.001
-      RUN_DATABASE_MIGRATION_ON_STARTUP: "true"
-    ports:
-      - "${INTERNAL_API_PORT}:8001"
-    volumes:
-      - ${AIRBYTE_CONFIG_PATH}:/configs
-      - ${AIRBYTE_WORKSPACE_PATH}:/workspace
-    networks:
-      - shared-network
-
-  # Airbyte Webapp (UI)
-  airbyte-webapp:
-    image: airbyte/webapp:${AIRBYTE_VERSION}
-    container_name: airbyte-webapp
-    restart: unless-stopped
-    depends_on:
-      - airbyte-server
-    ports:
-      - "${AIRBYTE_PORT}:80"
-    environment:
-      AIRBYTE_ROLE: webapp
-      AIRBYTE_VERSION: ${AIRBYTE_VERSION}
-      API_URL: /api/v1/
-      INTERNAL_API_HOST: airbyte-server:8001
-      CONNECTOR_BUILDER_API_HOST: airbyte-server:80
-      CONNECTOR_BUILDER_API_URL: /connector-builder-api
-      KEYCLOAK_INTERNAL_HOST: localhost
-      TRACKING_STRATEGY: logging
-    networks:
-      - shared-network
-
-  # Airbyte Worker
-  airbyte-worker:
-    image: airbyte/worker:${AIRBYTE_VERSION}
-    container_name: airbyte-worker
-    restart: unless-stopped
-    depends_on:
-      airbyte-bootloader:
-        condition: service_completed_successfully
-      airbyte-temporal:
-        condition: service_started
-    environment:
-      AIRBYTE_VERSION: ${AIRBYTE_VERSION}
-      DATABASE_URL: ${DATABASE_URL}
-      DATABASE_USER: ${POSTGRES_AIRBYTE_USER}
-      DATABASE_PASSWORD: ${POSTGRES_AIRBYTE_PASSWORD}
-      DATABASE_DB: ${POSTGRES_AIRBYTE_DB}
-      CONFIG_ROOT: /configs
-      WORKSPACE_ROOT: /workspace
-      LOCAL_ROOT: /tmp/airbyte_local
-      TEMPORAL_HOST: airbyte-temporal:7233
-      TRACKING_STRATEGY: logging
-      WORKER_ENVIRONMENT: local                                          # Changed: docker -> local
-      LOG_LEVEL: INFO
-      INTERNAL_API_HOST: airbyte-server:8001
-      AUTO_DETECT_SCHEMA: "true"
-      MAX_SYNC_WORKERS: 5
-      MAX_SPEC_WORKERS: 5
-      MAX_CHECK_WORKERS: 5
-      MAX_DISCOVER_WORKERS: 5
-      CONFIGS_DATABASE_MINIMUM_FLYWAY_MIGRATION_VERSION: 0.35.15.001
-      JOBS_DATABASE_MINIMUM_FLYWAY_MIGRATION_VERSION: 0.29.15.001
-      SECRET_PERSISTENCE: TESTING_CONFIG_DB_TABLE
-      MICRONAUT_ENVIRONMENTS: control-plane
-    volumes:
-      - ${AIRBYTE_CONFIG_PATH}:/configs
-      - ${AIRBYTE_WORKSPACE_PATH}:/workspace
-      # Removed: /var/run/docker.sock:/var/run/docker.sock  — not needed in local mode
-    networks:
-      - shared-network
-
-  # Airbyte Cron
-  airbyte-cron:
-    image: airbyte/cron:${AIRBYTE_VERSION}
-    container_name: airbyte-cron
-    restart: unless-stopped
-    depends_on:
-      airbyte-bootloader:
-        condition: service_completed_successfully
-    environment:
-      AIRBYTE_VERSION: ${AIRBYTE_VERSION}
-      DATABASE_URL: ${DATABASE_URL}
-      DATABASE_USER: ${POSTGRES_AIRBYTE_USER}
-      DATABASE_PASSWORD: ${POSTGRES_AIRBYTE_PASSWORD}
-      DATABASE_DB: ${POSTGRES_AIRBYTE_DB}
-      CONFIG_ROOT: /configs
-      WORKSPACE_ROOT: /workspace
-      TEMPORAL_HOST: airbyte-temporal:7233
-      TRACKING_STRATEGY: logging
-      WORKER_ENVIRONMENT: docker
-      LOG_LEVEL: INFO
-      MICRONAUT_ENVIRONMENTS: control-plane
-    volumes:
-      - ${AIRBYTE_CONFIG_PATH}:/configs
-      - ${AIRBYTE_WORKSPACE_PATH}:/workspace
-    networks:
-      - shared-network
-
+      
 # =================================================================
 # NETWORK
 # =================================================================

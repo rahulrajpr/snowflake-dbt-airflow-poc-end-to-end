@@ -1,0 +1,74 @@
+version: 1
+send_anonymous_usage_stats: false
+project_id: poc-data-pipeline
+
+plugins:
+  extractors:
+  
+  # Source: PostgreSQL
+  - name: tap-postgres
+    variant: meltanolabs
+    pip_url: git+https://github.com/MeltanoLabs/tap-postgres.git
+    config:
+      host: postgres
+      port: 5432
+      user: postgres
+      password: postgres
+      database: business_db
+      filter_schemas: ['public']
+      
+    # Configure incremental/full per table
+    metadata:
+      public-orders:
+        replication-method: INCREMENTAL
+        replication-key: updated_at
+      
+      public-products:
+        replication-method: FULL_TABLE
+  
+  # Source: GCS (if needed)
+  - name: tap-gcs
+    variant: meltanolabs
+    pip_url: tap-gcs
+    config:
+      bucket: ${GCS_BUCKET}
+      start_date: '2026-01-01T00:00:00Z'
+      
+  loaders:
+  
+  # Destination: Snowflake
+  - name: target-snowflake
+    variant: meltanolabs
+    pip_url: meltanolabs-target-snowflake
+    config:
+      account: ${SNOWFLAKE_ACCOUNT}
+      user: ${SNOWFLAKE_USER}
+      password: ${SNOWFLAKE_PASSWORD}
+      warehouse: ${SNOWFLAKE_WAREHOUSE}
+      database: ${SNOWFLAKE_DATABASE}
+      schema: ${SNOWFLAKE_SCHEMA}
+      role: ${SNOWFLAKE_ROLE}
+      
+      # Schema evolution settings
+      add_record_metadata: true
+      hard_delete: false
+      
+  # Destination: Postgres (for testing)
+  - name: target-postgres
+    variant: meltanolabs
+    pip_url: meltanolabs-target-postgres
+    config:
+      host: postgres
+      port: 5432
+      user: postgres
+      password: postgres
+      database: business_db
+      default_target_schema: raw_data
+      add_record_metadata: true
+
+# NO SCHEDULES - Airflow handles all scheduling
+schedules: []
+
+# NO ENVIRONMENTS needed for simple POC
+environments:
+- name: dev
