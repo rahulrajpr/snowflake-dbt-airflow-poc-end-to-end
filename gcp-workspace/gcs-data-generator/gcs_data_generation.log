@@ -1,0 +1,1276 @@
+2026-02-02 17:18:50,758 - INFO - ======================================================================
+2026-02-02 17:18:50,759 - INFO - GCS DATA GENERATOR - STARTING
+2026-02-02 17:18:50,759 - INFO - ======================================================================
+2026-02-02 17:18:50,759 - INFO - 
+[STEP 1] Initializing connections...
+2026-02-02 17:18:52,796 - INFO - [OK] GCS client initialized - Bucket: finance-data-landing-bucket-poc
+2026-02-02 17:18:52,796 - INFO - 
+[STEP 2] Retrieving fund data from PostgreSQL...
+2026-02-02 17:18:52,796 - INFO - [START] Fetching fund data from PostgreSQL...
+2026-02-02 17:18:56,886 - ERROR - [FAIL] PostgreSQL connection failed: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-02-02 17:22:39,428 - INFO - ======================================================================
+2026-02-02 17:22:39,429 - INFO - GCS DATA GENERATOR - STARTING
+2026-02-02 17:22:39,429 - INFO - ======================================================================
+2026-02-02 17:22:39,429 - INFO - 
+[STEP 1] Initializing connections...
+2026-02-02 17:22:41,557 - INFO - [OK] GCS client initialized - Bucket: finance-data-landing-bucket-poc
+2026-02-02 17:22:41,558 - INFO - 
+[STEP 2] Retrieving fund data from PostgreSQL...
+2026-02-02 17:22:41,558 - INFO - [START] Fetching fund data from PostgreSQL...
+2026-02-02 17:22:41,672 - INFO - [OK] PostgreSQL connection established
+2026-02-02 17:22:41,717 - INFO - [OK] Retrieved 100 funds from PostgreSQL
+2026-02-02 17:22:41,718 - INFO - 
+[STEP 3] Generating fund metadata...
+2026-02-02 17:22:42,670 - INFO - [UPLOAD] Fund metadata uploaded: fund-metadata/fund_attributes.csv (100 records)
+2026-02-02 17:22:42,670 - INFO - 
+[STEP 4] Generating 100 days of historical data...
+2026-02-02 17:22:42,671 - INFO - Date range: 2025-10-25 to 2026-02-02
+2026-02-02 17:22:42,671 - INFO - 
+--- Processing 2025-10-25 ---
+2026-02-02 17:22:43,438 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-10-25.csv (100 records)
+2026-02-02 17:22:43,439 - INFO - 
+--- Processing 2025-10-26 ---
+2026-02-02 17:22:44,251 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-10-26.csv (100 records)
+2026-02-02 17:22:44,251 - INFO - 
+--- Processing 2025-10-27 ---
+2026-02-02 17:22:45,077 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-10-27.csv (100 records)
+2026-02-02 17:22:53,475 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:22:53,486 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:22:53,487 - WARNING - [WARN] No data for SP500 on 2025-10-27 (weekend/holiday)
+2026-02-02 17:22:57,469 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:22:57,471 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:22:57,474 - WARNING - [WARN] No data for NASDAQ on 2025-10-27 (weekend/holiday)
+2026-02-02 17:23:01,873 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:01,873 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:01,874 - WARNING - [WARN] No data for DJIA on 2025-10-27 (weekend/holiday)
+2026-02-02 17:23:06,174 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:06,175 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:06,176 - WARNING - [WARN] No data for RUSSELL2000 on 2025-10-27 (weekend/holiday)
+2026-02-02 17:23:06,859 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-10-27.json
+2026-02-02 17:23:06,861 - INFO - 
+--- Processing 2025-10-28 ---
+2026-02-02 17:23:07,706 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-10-28.csv (100 records)
+2026-02-02 17:23:07,708 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:07,708 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:07,709 - WARNING - [WARN] No data for SP500 on 2025-10-28 (weekend/holiday)
+2026-02-02 17:23:07,710 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:07,711 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:07,711 - WARNING - [WARN] No data for NASDAQ on 2025-10-28 (weekend/holiday)
+2026-02-02 17:23:07,713 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:07,714 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:07,715 - WARNING - [WARN] No data for DJIA on 2025-10-28 (weekend/holiday)
+2026-02-02 17:23:07,715 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:07,716 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:07,717 - WARNING - [WARN] No data for RUSSELL2000 on 2025-10-28 (weekend/holiday)
+2026-02-02 17:23:08,424 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-10-28.json
+2026-02-02 17:23:08,425 - INFO - 
+--- Processing 2025-10-29 ---
+2026-02-02 17:23:09,142 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-10-29.csv (100 records)
+2026-02-02 17:23:09,144 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:09,145 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:09,145 - WARNING - [WARN] No data for SP500 on 2025-10-29 (weekend/holiday)
+2026-02-02 17:23:09,147 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:09,147 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:09,148 - WARNING - [WARN] No data for NASDAQ on 2025-10-29 (weekend/holiday)
+2026-02-02 17:23:09,149 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:09,150 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:09,151 - WARNING - [WARN] No data for DJIA on 2025-10-29 (weekend/holiday)
+2026-02-02 17:23:09,152 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:09,153 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:09,154 - WARNING - [WARN] No data for RUSSELL2000 on 2025-10-29 (weekend/holiday)
+2026-02-02 17:23:09,961 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-10-29.json
+2026-02-02 17:23:09,961 - INFO - 
+--- Processing 2025-10-30 ---
+2026-02-02 17:23:10,779 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-10-30.csv (100 records)
+2026-02-02 17:23:10,781 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:10,781 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:10,782 - WARNING - [WARN] No data for SP500 on 2025-10-30 (weekend/holiday)
+2026-02-02 17:23:10,783 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:10,783 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:10,784 - WARNING - [WARN] No data for NASDAQ on 2025-10-30 (weekend/holiday)
+2026-02-02 17:23:10,785 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:10,786 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:10,786 - WARNING - [WARN] No data for DJIA on 2025-10-30 (weekend/holiday)
+2026-02-02 17:23:10,788 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:10,788 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:10,789 - WARNING - [WARN] No data for RUSSELL2000 on 2025-10-30 (weekend/holiday)
+2026-02-02 17:23:11,469 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-10-30.json
+2026-02-02 17:23:11,469 - INFO - 
+--- Processing 2025-10-31 ---
+2026-02-02 17:23:12,210 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-10-31.csv (100 records)
+2026-02-02 17:23:12,210 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:12,215 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:12,215 - WARNING - [WARN] No data for SP500 on 2025-10-31 (weekend/holiday)
+2026-02-02 17:23:12,215 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:12,215 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:12,215 - WARNING - [WARN] No data for NASDAQ on 2025-10-31 (weekend/holiday)
+2026-02-02 17:23:12,215 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:12,215 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:12,215 - WARNING - [WARN] No data for DJIA on 2025-10-31 (weekend/holiday)
+2026-02-02 17:23:12,221 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:12,222 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:12,222 - WARNING - [WARN] No data for RUSSELL2000 on 2025-10-31 (weekend/holiday)
+2026-02-02 17:23:12,931 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-10-31.json
+2026-02-02 17:23:12,931 - INFO - 
+--- Processing 2025-11-01 ---
+2026-02-02 17:23:13,655 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-01.csv (100 records)
+2026-02-02 17:23:14,466 - INFO - [UPLOAD] Ratings data uploaded: ratings-data/fund_ratings_2025-11.json (76 funds rated)
+2026-02-02 17:23:14,467 - INFO - 
+--- Processing 2025-11-02 ---
+2026-02-02 17:23:15,286 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-02.csv (100 records)
+2026-02-02 17:23:15,286 - INFO - 
+--- Processing 2025-11-03 ---
+2026-02-02 17:23:16,106 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-03.csv (100 records)
+2026-02-02 17:23:16,108 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:16,109 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:16,110 - WARNING - [WARN] No data for SP500 on 2025-11-03 (weekend/holiday)
+2026-02-02 17:23:16,111 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:16,113 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:16,113 - WARNING - [WARN] No data for NASDAQ on 2025-11-03 (weekend/holiday)
+2026-02-02 17:23:16,115 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:16,115 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:16,116 - WARNING - [WARN] No data for DJIA on 2025-11-03 (weekend/holiday)
+2026-02-02 17:23:16,119 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:16,121 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:16,126 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-03 (weekend/holiday)
+2026-02-02 17:23:16,829 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-03.json
+2026-02-02 17:23:16,829 - INFO - 
+--- Processing 2025-11-04 ---
+2026-02-02 17:23:17,641 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-04.csv (100 records)
+2026-02-02 17:23:17,642 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:17,642 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:17,644 - WARNING - [WARN] No data for SP500 on 2025-11-04 (weekend/holiday)
+2026-02-02 17:23:17,644 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:17,645 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:17,645 - WARNING - [WARN] No data for NASDAQ on 2025-11-04 (weekend/holiday)
+2026-02-02 17:23:17,646 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:17,647 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:17,648 - WARNING - [WARN] No data for DJIA on 2025-11-04 (weekend/holiday)
+2026-02-02 17:23:17,648 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:17,650 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:17,650 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-04 (weekend/holiday)
+2026-02-02 17:23:18,459 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-04.json
+2026-02-02 17:23:18,460 - INFO - 
+--- Processing 2025-11-05 ---
+2026-02-02 17:23:19,182 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-05.csv (100 records)
+2026-02-02 17:23:19,183 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:19,185 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:19,186 - WARNING - [WARN] No data for SP500 on 2025-11-05 (weekend/holiday)
+2026-02-02 17:23:19,187 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:19,188 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:19,188 - WARNING - [WARN] No data for NASDAQ on 2025-11-05 (weekend/holiday)
+2026-02-02 17:23:19,189 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:19,190 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:19,190 - WARNING - [WARN] No data for DJIA on 2025-11-05 (weekend/holiday)
+2026-02-02 17:23:19,191 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:19,192 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:19,192 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-05 (weekend/holiday)
+2026-02-02 17:23:19,892 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-05.json
+2026-02-02 17:23:19,893 - INFO - 
+--- Processing 2025-11-06 ---
+2026-02-02 17:23:20,609 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-06.csv (100 records)
+2026-02-02 17:23:20,610 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:20,612 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:20,612 - WARNING - [WARN] No data for SP500 on 2025-11-06 (weekend/holiday)
+2026-02-02 17:23:20,613 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:20,614 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:20,615 - WARNING - [WARN] No data for NASDAQ on 2025-11-06 (weekend/holiday)
+2026-02-02 17:23:20,616 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:20,616 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:20,617 - WARNING - [WARN] No data for DJIA on 2025-11-06 (weekend/holiday)
+2026-02-02 17:23:20,618 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:20,618 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:20,618 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-06 (weekend/holiday)
+2026-02-02 17:23:21,325 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-06.json
+2026-02-02 17:23:21,326 - INFO - 
+--- Processing 2025-11-07 ---
+2026-02-02 17:23:22,147 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-07.csv (100 records)
+2026-02-02 17:23:22,150 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:22,151 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:22,153 - WARNING - [WARN] No data for SP500 on 2025-11-07 (weekend/holiday)
+2026-02-02 17:23:22,159 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:22,163 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:22,165 - WARNING - [WARN] No data for NASDAQ on 2025-11-07 (weekend/holiday)
+2026-02-02 17:23:22,167 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:22,170 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:22,173 - WARNING - [WARN] No data for DJIA on 2025-11-07 (weekend/holiday)
+2026-02-02 17:23:22,175 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:22,176 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:22,177 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-07 (weekend/holiday)
+2026-02-02 17:23:22,863 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-07.json
+2026-02-02 17:23:22,864 - INFO - 
+--- Processing 2025-11-08 ---
+2026-02-02 17:23:23,734 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-08.csv (100 records)
+2026-02-02 17:23:23,734 - INFO - 
+--- Processing 2025-11-09 ---
+2026-02-02 17:23:24,501 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-09.csv (100 records)
+2026-02-02 17:23:24,501 - INFO - 
+--- Processing 2025-11-10 ---
+2026-02-02 17:23:25,321 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-10.csv (100 records)
+2026-02-02 17:23:25,322 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:25,324 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:25,324 - WARNING - [WARN] No data for SP500 on 2025-11-10 (weekend/holiday)
+2026-02-02 17:23:25,325 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:25,326 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:25,326 - WARNING - [WARN] No data for NASDAQ on 2025-11-10 (weekend/holiday)
+2026-02-02 17:23:25,326 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:25,326 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:25,328 - WARNING - [WARN] No data for DJIA on 2025-11-10 (weekend/holiday)
+2026-02-02 17:23:25,328 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:25,328 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:25,331 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-10 (weekend/holiday)
+2026-02-02 17:23:26,035 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-10.json
+2026-02-02 17:23:26,035 - INFO - 
+--- Processing 2025-11-11 ---
+2026-02-02 17:23:26,857 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-11.csv (100 records)
+2026-02-02 17:23:26,858 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:26,858 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:26,858 - WARNING - [WARN] No data for SP500 on 2025-11-11 (weekend/holiday)
+2026-02-02 17:23:26,861 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:26,863 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:26,864 - WARNING - [WARN] No data for NASDAQ on 2025-11-11 (weekend/holiday)
+2026-02-02 17:23:26,866 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:26,867 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:26,868 - WARNING - [WARN] No data for DJIA on 2025-11-11 (weekend/holiday)
+2026-02-02 17:23:26,868 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:26,869 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:26,870 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-11 (weekend/holiday)
+2026-02-02 17:23:27,574 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-11.json
+2026-02-02 17:23:27,574 - INFO - 
+--- Processing 2025-11-12 ---
+2026-02-02 17:23:28,392 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-12.csv (100 records)
+2026-02-02 17:23:28,394 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:28,395 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:28,396 - WARNING - [WARN] No data for SP500 on 2025-11-12 (weekend/holiday)
+2026-02-02 17:23:28,397 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:28,397 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:28,398 - WARNING - [WARN] No data for NASDAQ on 2025-11-12 (weekend/holiday)
+2026-02-02 17:23:28,399 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:28,400 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:28,400 - WARNING - [WARN] No data for DJIA on 2025-11-12 (weekend/holiday)
+2026-02-02 17:23:28,401 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:28,403 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:28,403 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-12 (weekend/holiday)
+2026-02-02 17:23:29,108 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-12.json
+2026-02-02 17:23:29,109 - INFO - 
+--- Processing 2025-11-13 ---
+2026-02-02 17:23:29,870 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-13.csv (100 records)
+2026-02-02 17:23:29,872 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:29,873 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:29,874 - WARNING - [WARN] No data for SP500 on 2025-11-13 (weekend/holiday)
+2026-02-02 17:23:29,875 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:29,876 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:29,877 - WARNING - [WARN] No data for NASDAQ on 2025-11-13 (weekend/holiday)
+2026-02-02 17:23:29,878 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:29,879 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:29,879 - WARNING - [WARN] No data for DJIA on 2025-11-13 (weekend/holiday)
+2026-02-02 17:23:29,880 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:29,881 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:29,882 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-13 (weekend/holiday)
+2026-02-02 17:23:30,643 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-13.json
+2026-02-02 17:23:30,645 - INFO - 
+--- Processing 2025-11-14 ---
+2026-02-02 17:23:31,378 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-14.csv (100 records)
+2026-02-02 17:23:31,379 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:31,380 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:31,381 - WARNING - [WARN] No data for SP500 on 2025-11-14 (weekend/holiday)
+2026-02-02 17:23:31,382 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:31,382 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:31,383 - WARNING - [WARN] No data for NASDAQ on 2025-11-14 (weekend/holiday)
+2026-02-02 17:23:31,384 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:31,384 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:31,386 - WARNING - [WARN] No data for DJIA on 2025-11-14 (weekend/holiday)
+2026-02-02 17:23:31,386 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:31,387 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:31,387 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-14 (weekend/holiday)
+2026-02-02 17:23:32,042 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-14.json
+2026-02-02 17:23:32,043 - INFO - 
+--- Processing 2025-11-15 ---
+2026-02-02 17:23:32,798 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-15.csv (100 records)
+2026-02-02 17:23:32,799 - INFO - 
+--- Processing 2025-11-16 ---
+2026-02-02 17:23:33,512 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-16.csv (100 records)
+2026-02-02 17:23:33,512 - INFO - 
+--- Processing 2025-11-17 ---
+2026-02-02 17:23:34,239 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-17.csv (100 records)
+2026-02-02 17:23:34,241 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:34,242 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:34,242 - WARNING - [WARN] No data for SP500 on 2025-11-17 (weekend/holiday)
+2026-02-02 17:23:34,243 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:34,244 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:34,244 - WARNING - [WARN] No data for NASDAQ on 2025-11-17 (weekend/holiday)
+2026-02-02 17:23:34,246 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:34,246 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:34,248 - WARNING - [WARN] No data for DJIA on 2025-11-17 (weekend/holiday)
+2026-02-02 17:23:34,249 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:34,249 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:34,250 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-17 (weekend/holiday)
+2026-02-02 17:23:34,886 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-17.json
+2026-02-02 17:23:34,887 - INFO - 
+--- Processing 2025-11-18 ---
+2026-02-02 17:23:35,662 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-18.csv (100 records)
+2026-02-02 17:23:35,665 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:35,665 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:35,666 - WARNING - [WARN] No data for SP500 on 2025-11-18 (weekend/holiday)
+2026-02-02 17:23:35,668 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:35,670 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:35,672 - WARNING - [WARN] No data for NASDAQ on 2025-11-18 (weekend/holiday)
+2026-02-02 17:23:35,674 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:35,675 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:35,676 - WARNING - [WARN] No data for DJIA on 2025-11-18 (weekend/holiday)
+2026-02-02 17:23:35,677 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:35,678 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:35,679 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-18 (weekend/holiday)
+2026-02-02 17:23:36,319 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-18.json
+2026-02-02 17:23:36,320 - INFO - 
+--- Processing 2025-11-19 ---
+2026-02-02 17:23:36,997 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-19.csv (100 records)
+2026-02-02 17:23:36,998 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:36,999 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:37,000 - WARNING - [WARN] No data for SP500 on 2025-11-19 (weekend/holiday)
+2026-02-02 17:23:37,001 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:37,001 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:37,002 - WARNING - [WARN] No data for NASDAQ on 2025-11-19 (weekend/holiday)
+2026-02-02 17:23:37,003 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:37,005 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:37,006 - WARNING - [WARN] No data for DJIA on 2025-11-19 (weekend/holiday)
+2026-02-02 17:23:37,007 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:37,007 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:37,008 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-19 (weekend/holiday)
+2026-02-02 17:23:37,701 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-19.json
+2026-02-02 17:23:37,702 - INFO - 
+--- Processing 2025-11-20 ---
+2026-02-02 17:23:38,363 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-20.csv (100 records)
+2026-02-02 17:23:38,364 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:38,365 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:38,366 - WARNING - [WARN] No data for SP500 on 2025-11-20 (weekend/holiday)
+2026-02-02 17:23:38,367 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:38,368 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:38,368 - WARNING - [WARN] No data for NASDAQ on 2025-11-20 (weekend/holiday)
+2026-02-02 17:23:38,369 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:38,371 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:38,372 - WARNING - [WARN] No data for DJIA on 2025-11-20 (weekend/holiday)
+2026-02-02 17:23:38,373 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:38,374 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:38,374 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-20 (weekend/holiday)
+2026-02-02 17:23:39,041 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-20.json
+2026-02-02 17:23:39,041 - INFO - 
+--- Processing 2025-11-21 ---
+2026-02-02 17:23:39,789 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-21.csv (100 records)
+2026-02-02 17:23:39,791 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:39,792 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:39,792 - WARNING - [WARN] No data for SP500 on 2025-11-21 (weekend/holiday)
+2026-02-02 17:23:39,793 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:39,793 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:39,794 - WARNING - [WARN] No data for NASDAQ on 2025-11-21 (weekend/holiday)
+2026-02-02 17:23:39,795 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:39,796 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:39,796 - WARNING - [WARN] No data for DJIA on 2025-11-21 (weekend/holiday)
+2026-02-02 17:23:39,797 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:39,798 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:39,798 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-21 (weekend/holiday)
+2026-02-02 17:23:40,431 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-21.json
+2026-02-02 17:23:40,432 - INFO - 
+--- Processing 2025-11-22 ---
+2026-02-02 17:23:41,114 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-22.csv (100 records)
+2026-02-02 17:23:41,121 - INFO - 
+--- Processing 2025-11-23 ---
+2026-02-02 17:23:41,868 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-23.csv (100 records)
+2026-02-02 17:23:41,868 - INFO - 
+--- Processing 2025-11-24 ---
+2026-02-02 17:23:42,545 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-24.csv (100 records)
+2026-02-02 17:23:42,546 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:42,547 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:42,547 - WARNING - [WARN] No data for SP500 on 2025-11-24 (weekend/holiday)
+2026-02-02 17:23:42,548 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:42,548 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:42,548 - WARNING - [WARN] No data for NASDAQ on 2025-11-24 (weekend/holiday)
+2026-02-02 17:23:42,549 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:42,549 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:42,550 - WARNING - [WARN] No data for DJIA on 2025-11-24 (weekend/holiday)
+2026-02-02 17:23:42,551 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:42,551 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:42,552 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-24 (weekend/holiday)
+2026-02-02 17:23:43,221 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-24.json
+2026-02-02 17:23:43,222 - INFO - 
+--- Processing 2025-11-25 ---
+2026-02-02 17:23:43,906 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-25.csv (100 records)
+2026-02-02 17:23:43,906 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:43,908 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:43,908 - WARNING - [WARN] No data for SP500 on 2025-11-25 (weekend/holiday)
+2026-02-02 17:23:43,909 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:43,909 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:43,910 - WARNING - [WARN] No data for NASDAQ on 2025-11-25 (weekend/holiday)
+2026-02-02 17:23:43,911 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:43,911 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:43,912 - WARNING - [WARN] No data for DJIA on 2025-11-25 (weekend/holiday)
+2026-02-02 17:23:43,912 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:43,914 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:43,914 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-25 (weekend/holiday)
+2026-02-02 17:23:44,581 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-25.json
+2026-02-02 17:23:44,581 - INFO - 
+--- Processing 2025-11-26 ---
+2026-02-02 17:23:45,346 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-26.csv (100 records)
+2026-02-02 17:23:45,347 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:45,348 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:45,349 - WARNING - [WARN] No data for SP500 on 2025-11-26 (weekend/holiday)
+2026-02-02 17:23:45,349 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:45,350 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:45,350 - WARNING - [WARN] No data for NASDAQ on 2025-11-26 (weekend/holiday)
+2026-02-02 17:23:45,351 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:45,351 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:45,352 - WARNING - [WARN] No data for DJIA on 2025-11-26 (weekend/holiday)
+2026-02-02 17:23:45,352 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:45,365 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:45,366 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-26 (weekend/holiday)
+2026-02-02 17:23:46,036 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-26.json
+2026-02-02 17:23:46,037 - INFO - 
+--- Processing 2025-11-27 ---
+2026-02-02 17:23:46,817 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-27.csv (100 records)
+2026-02-02 17:23:46,819 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:46,819 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:46,820 - WARNING - [WARN] No data for SP500 on 2025-11-27 (weekend/holiday)
+2026-02-02 17:23:46,822 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:46,822 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:46,822 - WARNING - [WARN] No data for NASDAQ on 2025-11-27 (weekend/holiday)
+2026-02-02 17:23:46,824 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:46,825 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:46,826 - WARNING - [WARN] No data for DJIA on 2025-11-27 (weekend/holiday)
+2026-02-02 17:23:46,827 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:46,827 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:46,828 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-27 (weekend/holiday)
+2026-02-02 17:23:47,476 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-27.json
+2026-02-02 17:23:47,477 - INFO - 
+--- Processing 2025-11-28 ---
+2026-02-02 17:23:48,369 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-28.csv (100 records)
+2026-02-02 17:23:48,369 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:48,371 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:48,371 - WARNING - [WARN] No data for SP500 on 2025-11-28 (weekend/holiday)
+2026-02-02 17:23:48,371 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:48,373 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:48,373 - WARNING - [WARN] No data for NASDAQ on 2025-11-28 (weekend/holiday)
+2026-02-02 17:23:48,374 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:48,374 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:48,375 - WARNING - [WARN] No data for DJIA on 2025-11-28 (weekend/holiday)
+2026-02-02 17:23:48,375 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:48,377 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:48,377 - WARNING - [WARN] No data for RUSSELL2000 on 2025-11-28 (weekend/holiday)
+2026-02-02 17:23:49,075 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-11-28.json
+2026-02-02 17:23:49,075 - INFO - 
+--- Processing 2025-11-29 ---
+2026-02-02 17:23:49,895 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-29.csv (100 records)
+2026-02-02 17:23:49,895 - INFO - 
+--- Processing 2025-11-30 ---
+2026-02-02 17:23:50,556 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-11-30.csv (100 records)
+2026-02-02 17:23:50,556 - INFO - 
+--- Processing 2025-12-01 ---
+2026-02-02 17:23:51,330 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-01.csv (100 records)
+2026-02-02 17:23:51,330 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:51,331 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:51,331 - WARNING - [WARN] No data for SP500 on 2025-12-01 (weekend/holiday)
+2026-02-02 17:23:51,333 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:51,333 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:51,334 - WARNING - [WARN] No data for NASDAQ on 2025-12-01 (weekend/holiday)
+2026-02-02 17:23:51,334 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:51,335 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:51,336 - WARNING - [WARN] No data for DJIA on 2025-12-01 (weekend/holiday)
+2026-02-02 17:23:51,336 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:51,337 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:51,337 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-01 (weekend/holiday)
+2026-02-02 17:23:52,047 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-01.json
+2026-02-02 17:23:52,852 - INFO - [UPLOAD] Ratings data uploaded: ratings-data/fund_ratings_2025-12.json (71 funds rated)
+2026-02-02 17:23:52,854 - INFO - 
+--- Processing 2025-12-02 ---
+2026-02-02 17:23:53,591 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-02.csv (100 records)
+2026-02-02 17:23:53,593 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:53,593 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:53,594 - WARNING - [WARN] No data for SP500 on 2025-12-02 (weekend/holiday)
+2026-02-02 17:23:53,595 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:53,595 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:53,596 - WARNING - [WARN] No data for NASDAQ on 2025-12-02 (weekend/holiday)
+2026-02-02 17:23:53,596 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:53,597 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:53,598 - WARNING - [WARN] No data for DJIA on 2025-12-02 (weekend/holiday)
+2026-02-02 17:23:53,598 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:53,600 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:53,601 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-02 (weekend/holiday)
+2026-02-02 17:23:54,299 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-02.json
+2026-02-02 17:23:54,299 - INFO - 
+--- Processing 2025-12-03 ---
+2026-02-02 17:23:55,119 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-03.csv (100 records)
+2026-02-02 17:23:55,120 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:55,120 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:55,120 - WARNING - [WARN] No data for SP500 on 2025-12-03 (weekend/holiday)
+2026-02-02 17:23:55,121 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:55,121 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:55,122 - WARNING - [WARN] No data for NASDAQ on 2025-12-03 (weekend/holiday)
+2026-02-02 17:23:55,122 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:55,123 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:55,123 - WARNING - [WARN] No data for DJIA on 2025-12-03 (weekend/holiday)
+2026-02-02 17:23:55,124 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:55,124 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:55,125 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-03 (weekend/holiday)
+2026-02-02 17:23:55,835 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-03.json
+2026-02-02 17:23:55,836 - INFO - 
+--- Processing 2025-12-04 ---
+2026-02-02 17:23:56,548 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-04.csv (100 records)
+2026-02-02 17:23:56,550 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:56,551 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:56,552 - WARNING - [WARN] No data for SP500 on 2025-12-04 (weekend/holiday)
+2026-02-02 17:23:56,553 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:56,554 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:56,559 - WARNING - [WARN] No data for NASDAQ on 2025-12-04 (weekend/holiday)
+2026-02-02 17:23:56,560 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:56,561 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:56,562 - WARNING - [WARN] No data for DJIA on 2025-12-04 (weekend/holiday)
+2026-02-02 17:23:56,567 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:56,569 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:56,569 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-04 (weekend/holiday)
+2026-02-02 17:23:57,178 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-04.json
+2026-02-02 17:23:57,178 - INFO - 
+--- Processing 2025-12-05 ---
+2026-02-02 17:23:57,986 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-05.csv (100 records)
+2026-02-02 17:23:57,988 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:57,989 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:23:57,989 - WARNING - [WARN] No data for SP500 on 2025-12-05 (weekend/holiday)
+2026-02-02 17:23:57,990 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:57,990 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:23:57,990 - WARNING - [WARN] No data for NASDAQ on 2025-12-05 (weekend/holiday)
+2026-02-02 17:23:57,990 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:57,993 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:23:57,993 - WARNING - [WARN] No data for DJIA on 2025-12-05 (weekend/holiday)
+2026-02-02 17:23:57,995 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:23:57,995 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:23:57,997 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-05 (weekend/holiday)
+2026-02-02 17:23:58,699 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-05.json
+2026-02-02 17:23:58,704 - INFO - 
+--- Processing 2025-12-06 ---
+2026-02-02 17:23:59,523 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-06.csv (100 records)
+2026-02-02 17:23:59,524 - INFO - 
+--- Processing 2025-12-07 ---
+2026-02-02 17:24:00,354 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-07.csv (100 records)
+2026-02-02 17:24:00,356 - INFO - 
+--- Processing 2025-12-08 ---
+2026-02-02 17:24:01,060 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-08.csv (100 records)
+2026-02-02 17:24:01,062 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:01,063 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:01,064 - WARNING - [WARN] No data for SP500 on 2025-12-08 (weekend/holiday)
+2026-02-02 17:24:01,068 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:01,070 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:01,072 - WARNING - [WARN] No data for NASDAQ on 2025-12-08 (weekend/holiday)
+2026-02-02 17:24:01,078 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:01,080 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:01,081 - WARNING - [WARN] No data for DJIA on 2025-12-08 (weekend/holiday)
+2026-02-02 17:24:01,085 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:01,086 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:01,089 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-08 (weekend/holiday)
+2026-02-02 17:24:01,774 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-08.json
+2026-02-02 17:24:01,775 - INFO - 
+--- Processing 2025-12-09 ---
+2026-02-02 17:24:02,426 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-09.csv (100 records)
+2026-02-02 17:24:02,426 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:02,428 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:02,428 - WARNING - [WARN] No data for SP500 on 2025-12-09 (weekend/holiday)
+2026-02-02 17:24:02,429 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:02,430 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:02,430 - WARNING - [WARN] No data for NASDAQ on 2025-12-09 (weekend/holiday)
+2026-02-02 17:24:02,431 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:02,431 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:02,433 - WARNING - [WARN] No data for DJIA on 2025-12-09 (weekend/holiday)
+2026-02-02 17:24:02,433 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:02,435 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:02,436 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-09 (weekend/holiday)
+2026-02-02 17:24:03,074 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-09.json
+2026-02-02 17:24:03,075 - INFO - 
+--- Processing 2025-12-10 ---
+2026-02-02 17:24:03,931 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-10.csv (100 records)
+2026-02-02 17:24:03,933 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:03,934 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:03,935 - WARNING - [WARN] No data for SP500 on 2025-12-10 (weekend/holiday)
+2026-02-02 17:24:03,936 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:03,937 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:03,937 - WARNING - [WARN] No data for NASDAQ on 2025-12-10 (weekend/holiday)
+2026-02-02 17:24:03,939 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:03,940 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:03,941 - WARNING - [WARN] No data for DJIA on 2025-12-10 (weekend/holiday)
+2026-02-02 17:24:03,942 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:03,944 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:03,946 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-10 (weekend/holiday)
+2026-02-02 17:24:04,644 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-10.json
+2026-02-02 17:24:04,644 - INFO - 
+--- Processing 2025-12-11 ---
+2026-02-02 17:24:05,461 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-11.csv (100 records)
+2026-02-02 17:24:05,463 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:05,464 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:05,466 - WARNING - [WARN] No data for SP500 on 2025-12-11 (weekend/holiday)
+2026-02-02 17:24:05,466 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:05,467 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:05,468 - WARNING - [WARN] No data for NASDAQ on 2025-12-11 (weekend/holiday)
+2026-02-02 17:24:05,469 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:05,469 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:05,471 - WARNING - [WARN] No data for DJIA on 2025-12-11 (weekend/holiday)
+2026-02-02 17:24:05,473 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:05,473 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:05,474 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-11 (weekend/holiday)
+2026-02-02 17:24:06,180 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-11.json
+2026-02-02 17:24:06,184 - INFO - 
+--- Processing 2025-12-12 ---
+2026-02-02 17:24:06,971 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-12.csv (100 records)
+2026-02-02 17:24:06,972 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:06,973 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:06,974 - WARNING - [WARN] No data for SP500 on 2025-12-12 (weekend/holiday)
+2026-02-02 17:24:06,976 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:06,976 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:06,977 - WARNING - [WARN] No data for NASDAQ on 2025-12-12 (weekend/holiday)
+2026-02-02 17:24:06,978 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:06,980 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:06,980 - WARNING - [WARN] No data for DJIA on 2025-12-12 (weekend/holiday)
+2026-02-02 17:24:06,982 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:06,983 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:06,983 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-12 (weekend/holiday)
+2026-02-02 17:24:07,716 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-12.json
+2026-02-02 17:24:07,720 - INFO - 
+--- Processing 2025-12-13 ---
+2026-02-02 17:24:08,439 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-13.csv (100 records)
+2026-02-02 17:24:08,440 - INFO - 
+--- Processing 2025-12-14 ---
+2026-02-02 17:24:09,251 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-14.csv (100 records)
+2026-02-02 17:24:09,251 - INFO - 
+--- Processing 2025-12-15 ---
+2026-02-02 17:24:10,070 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-15.csv (100 records)
+2026-02-02 17:24:10,072 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:10,072 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:10,073 - WARNING - [WARN] No data for SP500 on 2025-12-15 (weekend/holiday)
+2026-02-02 17:24:10,074 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:10,074 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:10,075 - WARNING - [WARN] No data for NASDAQ on 2025-12-15 (weekend/holiday)
+2026-02-02 17:24:10,076 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:10,076 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:10,077 - WARNING - [WARN] No data for DJIA on 2025-12-15 (weekend/holiday)
+2026-02-02 17:24:10,078 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:10,079 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:10,079 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-15 (weekend/holiday)
+2026-02-02 17:24:10,764 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-15.json
+2026-02-02 17:24:10,765 - INFO - 
+--- Processing 2025-12-16 ---
+2026-02-02 17:24:11,467 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-16.csv (100 records)
+2026-02-02 17:24:11,469 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:11,470 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:11,470 - WARNING - [WARN] No data for SP500 on 2025-12-16 (weekend/holiday)
+2026-02-02 17:24:11,471 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:11,472 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:11,473 - WARNING - [WARN] No data for NASDAQ on 2025-12-16 (weekend/holiday)
+2026-02-02 17:24:11,474 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:11,475 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:11,475 - WARNING - [WARN] No data for DJIA on 2025-12-16 (weekend/holiday)
+2026-02-02 17:24:11,476 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:11,477 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:11,477 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-16 (weekend/holiday)
+2026-02-02 17:24:12,075 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-16.json
+2026-02-02 17:24:12,075 - INFO - 
+--- Processing 2025-12-17 ---
+2026-02-02 17:24:12,842 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-17.csv (100 records)
+2026-02-02 17:24:12,843 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:12,844 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:12,845 - WARNING - [WARN] No data for SP500 on 2025-12-17 (weekend/holiday)
+2026-02-02 17:24:12,845 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:12,847 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:12,848 - WARNING - [WARN] No data for NASDAQ on 2025-12-17 (weekend/holiday)
+2026-02-02 17:24:12,850 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:12,851 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:12,852 - WARNING - [WARN] No data for DJIA on 2025-12-17 (weekend/holiday)
+2026-02-02 17:24:12,854 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:12,856 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:12,858 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-17 (weekend/holiday)
+2026-02-02 17:24:13,534 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-17.json
+2026-02-02 17:24:13,535 - INFO - 
+--- Processing 2025-12-18 ---
+2026-02-02 17:24:14,371 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-18.csv (100 records)
+2026-02-02 17:24:14,373 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:14,374 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:14,374 - WARNING - [WARN] No data for SP500 on 2025-12-18 (weekend/holiday)
+2026-02-02 17:24:14,375 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:14,376 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:14,377 - WARNING - [WARN] No data for NASDAQ on 2025-12-18 (weekend/holiday)
+2026-02-02 17:24:14,378 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:14,380 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:14,381 - WARNING - [WARN] No data for DJIA on 2025-12-18 (weekend/holiday)
+2026-02-02 17:24:14,382 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:14,384 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:14,384 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-18 (weekend/holiday)
+2026-02-02 17:24:15,088 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-18.json
+2026-02-02 17:24:15,089 - INFO - 
+--- Processing 2025-12-19 ---
+2026-02-02 17:24:15,908 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-19.csv (100 records)
+2026-02-02 17:24:15,909 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:15,909 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:15,911 - WARNING - [WARN] No data for SP500 on 2025-12-19 (weekend/holiday)
+2026-02-02 17:24:15,912 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:15,913 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:15,913 - WARNING - [WARN] No data for NASDAQ on 2025-12-19 (weekend/holiday)
+2026-02-02 17:24:15,915 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:15,916 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:15,916 - WARNING - [WARN] No data for DJIA on 2025-12-19 (weekend/holiday)
+2026-02-02 17:24:15,916 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:15,918 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:15,918 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-19 (weekend/holiday)
+2026-02-02 17:24:16,623 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-19.json
+2026-02-02 17:24:16,624 - INFO - 
+--- Processing 2025-12-20 ---
+2026-02-02 17:24:17,443 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-20.csv (100 records)
+2026-02-02 17:24:17,443 - INFO - 
+--- Processing 2025-12-21 ---
+2026-02-02 17:24:18,159 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-21.csv (100 records)
+2026-02-02 17:24:18,160 - INFO - 
+--- Processing 2025-12-22 ---
+2026-02-02 17:24:18,875 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-22.csv (100 records)
+2026-02-02 17:24:18,876 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:18,878 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:18,878 - WARNING - [WARN] No data for SP500 on 2025-12-22 (weekend/holiday)
+2026-02-02 17:24:18,879 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:18,880 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:18,881 - WARNING - [WARN] No data for NASDAQ on 2025-12-22 (weekend/holiday)
+2026-02-02 17:24:18,882 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:18,882 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:18,883 - WARNING - [WARN] No data for DJIA on 2025-12-22 (weekend/holiday)
+2026-02-02 17:24:18,884 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:18,885 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:18,885 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-22 (weekend/holiday)
+2026-02-02 17:24:19,592 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-22.json
+2026-02-02 17:24:19,592 - INFO - 
+--- Processing 2025-12-23 ---
+2026-02-02 17:24:20,259 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-23.csv (100 records)
+2026-02-02 17:24:20,259 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:20,262 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:20,262 - WARNING - [WARN] No data for SP500 on 2025-12-23 (weekend/holiday)
+2026-02-02 17:24:20,262 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:20,264 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:20,265 - WARNING - [WARN] No data for NASDAQ on 2025-12-23 (weekend/holiday)
+2026-02-02 17:24:20,267 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:20,267 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:20,267 - WARNING - [WARN] No data for DJIA on 2025-12-23 (weekend/holiday)
+2026-02-02 17:24:20,267 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:20,269 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:20,269 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-23 (weekend/holiday)
+2026-02-02 17:24:20,926 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-23.json
+2026-02-02 17:24:20,926 - INFO - 
+--- Processing 2025-12-24 ---
+2026-02-02 17:24:21,642 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-24.csv (100 records)
+2026-02-02 17:24:21,643 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:21,643 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:21,644 - WARNING - [WARN] No data for SP500 on 2025-12-24 (weekend/holiday)
+2026-02-02 17:24:21,645 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:21,646 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:21,646 - WARNING - [WARN] No data for NASDAQ on 2025-12-24 (weekend/holiday)
+2026-02-02 17:24:21,647 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:21,648 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:21,648 - WARNING - [WARN] No data for DJIA on 2025-12-24 (weekend/holiday)
+2026-02-02 17:24:21,650 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:21,651 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:21,652 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-24 (weekend/holiday)
+2026-02-02 17:24:22,357 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-24.json
+2026-02-02 17:24:22,358 - INFO - 
+--- Processing 2025-12-25 ---
+2026-02-02 17:24:23,070 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-25.csv (100 records)
+2026-02-02 17:24:23,072 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:23,074 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:23,075 - WARNING - [WARN] No data for SP500 on 2025-12-25 (weekend/holiday)
+2026-02-02 17:24:23,077 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:23,077 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:23,079 - WARNING - [WARN] No data for NASDAQ on 2025-12-25 (weekend/holiday)
+2026-02-02 17:24:23,079 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:23,080 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:23,081 - WARNING - [WARN] No data for DJIA on 2025-12-25 (weekend/holiday)
+2026-02-02 17:24:23,082 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:23,083 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:23,084 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-25 (weekend/holiday)
+2026-02-02 17:24:23,796 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-25.json
+2026-02-02 17:24:23,797 - INFO - 
+--- Processing 2025-12-26 ---
+2026-02-02 17:24:24,607 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-26.csv (100 records)
+2026-02-02 17:24:24,611 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:24,612 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:24,612 - WARNING - [WARN] No data for SP500 on 2025-12-26 (weekend/holiday)
+2026-02-02 17:24:24,614 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:24,614 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:24,615 - WARNING - [WARN] No data for NASDAQ on 2025-12-26 (weekend/holiday)
+2026-02-02 17:24:24,616 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:24,617 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:24,617 - WARNING - [WARN] No data for DJIA on 2025-12-26 (weekend/holiday)
+2026-02-02 17:24:24,619 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:24,619 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:24,619 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-26 (weekend/holiday)
+2026-02-02 17:24:25,304 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-26.json
+2026-02-02 17:24:25,304 - INFO - 
+--- Processing 2025-12-27 ---
+2026-02-02 17:24:26,052 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-27.csv (100 records)
+2026-02-02 17:24:26,052 - INFO - 
+--- Processing 2025-12-28 ---
+2026-02-02 17:24:26,764 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-28.csv (100 records)
+2026-02-02 17:24:26,764 - INFO - 
+--- Processing 2025-12-29 ---
+2026-02-02 17:24:27,481 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-29.csv (100 records)
+2026-02-02 17:24:27,483 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:27,485 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:27,486 - WARNING - [WARN] No data for SP500 on 2025-12-29 (weekend/holiday)
+2026-02-02 17:24:27,488 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:27,488 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:27,488 - WARNING - [WARN] No data for NASDAQ on 2025-12-29 (weekend/holiday)
+2026-02-02 17:24:27,491 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:27,491 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:27,493 - WARNING - [WARN] No data for DJIA on 2025-12-29 (weekend/holiday)
+2026-02-02 17:24:27,493 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:27,495 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:27,495 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-29 (weekend/holiday)
+2026-02-02 17:24:28,195 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-29.json
+2026-02-02 17:24:28,195 - INFO - 
+--- Processing 2025-12-30 ---
+2026-02-02 17:24:28,911 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-30.csv (100 records)
+2026-02-02 17:24:28,913 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:28,914 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:28,915 - WARNING - [WARN] No data for SP500 on 2025-12-30 (weekend/holiday)
+2026-02-02 17:24:28,916 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:28,916 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:28,916 - WARNING - [WARN] No data for NASDAQ on 2025-12-30 (weekend/holiday)
+2026-02-02 17:24:28,918 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:28,918 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:28,918 - WARNING - [WARN] No data for DJIA on 2025-12-30 (weekend/holiday)
+2026-02-02 17:24:28,918 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:28,921 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:28,922 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-30 (weekend/holiday)
+2026-02-02 17:24:29,635 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-30.json
+2026-02-02 17:24:29,636 - INFO - 
+--- Processing 2025-12-31 ---
+2026-02-02 17:24:30,311 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2025-12-31.csv (100 records)
+2026-02-02 17:24:30,313 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:30,314 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:30,315 - WARNING - [WARN] No data for SP500 on 2025-12-31 (weekend/holiday)
+2026-02-02 17:24:30,316 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:30,316 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:30,317 - WARNING - [WARN] No data for NASDAQ on 2025-12-31 (weekend/holiday)
+2026-02-02 17:24:30,319 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:30,320 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:30,321 - WARNING - [WARN] No data for DJIA on 2025-12-31 (weekend/holiday)
+2026-02-02 17:24:30,322 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:30,322 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:30,325 - WARNING - [WARN] No data for RUSSELL2000 on 2025-12-31 (weekend/holiday)
+2026-02-02 17:24:30,961 - INFO - [UPLOAD] Market data uploaded: market-data/market_2025-12-31.json
+2026-02-02 17:24:30,962 - INFO - 
+--- Processing 2026-01-01 ---
+2026-02-02 17:24:31,677 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-01.csv (100 records)
+2026-02-02 17:24:31,679 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:31,679 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:31,679 - WARNING - [WARN] No data for SP500 on 2026-01-01 (weekend/holiday)
+2026-02-02 17:24:31,680 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:31,681 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:31,682 - WARNING - [WARN] No data for NASDAQ on 2026-01-01 (weekend/holiday)
+2026-02-02 17:24:31,682 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:31,684 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:31,685 - WARNING - [WARN] No data for DJIA on 2026-01-01 (weekend/holiday)
+2026-02-02 17:24:31,685 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:31,686 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:31,686 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-01 (weekend/holiday)
+2026-02-02 17:24:32,392 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-01.json
+2026-02-02 17:24:33,214 - INFO - [UPLOAD] Ratings data uploaded: ratings-data/fund_ratings_2026-01.json (61 funds rated)
+2026-02-02 17:24:33,214 - INFO - 
+--- Processing 2026-01-02 ---
+2026-02-02 17:24:34,034 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-02.csv (100 records)
+2026-02-02 17:24:34,035 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:34,036 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:34,036 - WARNING - [WARN] No data for SP500 on 2026-01-02 (weekend/holiday)
+2026-02-02 17:24:34,037 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:34,039 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:34,039 - WARNING - [WARN] No data for NASDAQ on 2026-01-02 (weekend/holiday)
+2026-02-02 17:24:34,048 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:34,051 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:34,052 - WARNING - [WARN] No data for DJIA on 2026-01-02 (weekend/holiday)
+2026-02-02 17:24:34,053 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:34,055 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:34,056 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-02 (weekend/holiday)
+2026-02-02 17:24:34,749 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-02.json
+2026-02-02 17:24:34,750 - INFO - 
+--- Processing 2026-01-03 ---
+2026-02-02 17:24:35,466 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-03.csv (100 records)
+2026-02-02 17:24:35,467 - INFO - 
+--- Processing 2026-01-04 ---
+2026-02-02 17:24:36,285 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-04.csv (100 records)
+2026-02-02 17:24:36,285 - INFO - 
+--- Processing 2026-01-05 ---
+2026-02-02 17:24:37,103 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-05.csv (100 records)
+2026-02-02 17:24:37,105 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:37,106 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:37,106 - WARNING - [WARN] No data for SP500 on 2026-01-05 (weekend/holiday)
+2026-02-02 17:24:37,108 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:37,109 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:37,109 - WARNING - [WARN] No data for NASDAQ on 2026-01-05 (weekend/holiday)
+2026-02-02 17:24:37,110 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:37,111 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:37,111 - WARNING - [WARN] No data for DJIA on 2026-01-05 (weekend/holiday)
+2026-02-02 17:24:37,112 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:37,113 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:37,113 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-05 (weekend/holiday)
+2026-02-02 17:24:37,821 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-05.json
+2026-02-02 17:24:37,821 - INFO - 
+--- Processing 2026-01-06 ---
+2026-02-02 17:24:38,639 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-06.csv (100 records)
+2026-02-02 17:24:38,640 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:38,641 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:38,642 - WARNING - [WARN] No data for SP500 on 2026-01-06 (weekend/holiday)
+2026-02-02 17:24:38,643 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:38,643 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:38,643 - WARNING - [WARN] No data for NASDAQ on 2026-01-06 (weekend/holiday)
+2026-02-02 17:24:38,644 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:38,645 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:38,646 - WARNING - [WARN] No data for DJIA on 2026-01-06 (weekend/holiday)
+2026-02-02 17:24:38,647 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:38,647 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:38,648 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-06 (weekend/holiday)
+2026-02-02 17:24:39,357 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-06.json
+2026-02-02 17:24:39,357 - INFO - 
+--- Processing 2026-01-07 ---
+2026-02-02 17:24:40,176 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-07.csv (100 records)
+2026-02-02 17:24:40,177 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:40,178 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:40,179 - WARNING - [WARN] No data for SP500 on 2026-01-07 (weekend/holiday)
+2026-02-02 17:24:40,180 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:40,181 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:40,181 - WARNING - [WARN] No data for NASDAQ on 2026-01-07 (weekend/holiday)
+2026-02-02 17:24:40,183 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:40,183 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:40,186 - WARNING - [WARN] No data for DJIA on 2026-01-07 (weekend/holiday)
+2026-02-02 17:24:40,187 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:40,190 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:40,191 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-07 (weekend/holiday)
+2026-02-02 17:24:40,892 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-07.json
+2026-02-02 17:24:40,893 - INFO - 
+--- Processing 2026-01-08 ---
+2026-02-02 17:24:41,712 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-08.csv (100 records)
+2026-02-02 17:24:41,714 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:41,714 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:41,715 - WARNING - [WARN] No data for SP500 on 2026-01-08 (weekend/holiday)
+2026-02-02 17:24:41,716 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:41,717 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:41,717 - WARNING - [WARN] No data for NASDAQ on 2026-01-08 (weekend/holiday)
+2026-02-02 17:24:41,717 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:41,719 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:41,720 - WARNING - [WARN] No data for DJIA on 2026-01-08 (weekend/holiday)
+2026-02-02 17:24:41,720 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:41,721 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:41,722 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-08 (weekend/holiday)
+2026-02-02 17:24:42,428 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-08.json
+2026-02-02 17:24:42,429 - INFO - 
+--- Processing 2026-01-09 ---
+2026-02-02 17:24:43,247 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-09.csv (100 records)
+2026-02-02 17:24:43,248 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:43,249 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:43,250 - WARNING - [WARN] No data for SP500 on 2026-01-09 (weekend/holiday)
+2026-02-02 17:24:43,251 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:43,252 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:43,252 - WARNING - [WARN] No data for NASDAQ on 2026-01-09 (weekend/holiday)
+2026-02-02 17:24:43,253 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:43,254 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:43,254 - WARNING - [WARN] No data for DJIA on 2026-01-09 (weekend/holiday)
+2026-02-02 17:24:43,256 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:43,257 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:43,257 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-09 (weekend/holiday)
+2026-02-02 17:24:43,964 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-09.json
+2026-02-02 17:24:43,965 - INFO - 
+--- Processing 2026-01-10 ---
+2026-02-02 17:24:44,681 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-10.csv (100 records)
+2026-02-02 17:24:44,682 - INFO - 
+--- Processing 2026-01-11 ---
+2026-02-02 17:24:45,501 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-11.csv (100 records)
+2026-02-02 17:24:45,501 - INFO - 
+--- Processing 2026-01-12 ---
+2026-02-02 17:24:46,225 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-12.csv (100 records)
+2026-02-02 17:24:46,228 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:46,229 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:46,230 - WARNING - [WARN] No data for SP500 on 2026-01-12 (weekend/holiday)
+2026-02-02 17:24:46,233 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:46,234 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:46,234 - WARNING - [WARN] No data for NASDAQ on 2026-01-12 (weekend/holiday)
+2026-02-02 17:24:46,238 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:46,239 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:46,239 - WARNING - [WARN] No data for DJIA on 2026-01-12 (weekend/holiday)
+2026-02-02 17:24:46,244 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:46,245 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:46,246 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-12 (weekend/holiday)
+2026-02-02 17:24:46,934 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-12.json
+2026-02-02 17:24:46,935 - INFO - 
+--- Processing 2026-01-13 ---
+2026-02-02 17:24:47,651 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-13.csv (100 records)
+2026-02-02 17:24:47,652 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:47,653 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:47,653 - WARNING - [WARN] No data for SP500 on 2026-01-13 (weekend/holiday)
+2026-02-02 17:24:47,654 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:47,655 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:47,655 - WARNING - [WARN] No data for NASDAQ on 2026-01-13 (weekend/holiday)
+2026-02-02 17:24:47,657 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:47,657 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:47,657 - WARNING - [WARN] No data for DJIA on 2026-01-13 (weekend/holiday)
+2026-02-02 17:24:47,659 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:47,660 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:47,661 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-13 (weekend/holiday)
+2026-02-02 17:24:48,367 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-13.json
+2026-02-02 17:24:48,368 - INFO - 
+--- Processing 2026-01-14 ---
+2026-02-02 17:24:49,084 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-14.csv (100 records)
+2026-02-02 17:24:49,085 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:49,086 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:49,087 - WARNING - [WARN] No data for SP500 on 2026-01-14 (weekend/holiday)
+2026-02-02 17:24:49,088 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:49,088 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:49,089 - WARNING - [WARN] No data for NASDAQ on 2026-01-14 (weekend/holiday)
+2026-02-02 17:24:49,090 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:49,090 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:49,091 - WARNING - [WARN] No data for DJIA on 2026-01-14 (weekend/holiday)
+2026-02-02 17:24:49,092 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:49,092 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:49,094 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-14 (weekend/holiday)
+2026-02-02 17:24:49,800 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-14.json
+2026-02-02 17:24:49,802 - INFO - 
+--- Processing 2026-01-15 ---
+2026-02-02 17:24:50,620 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-15.csv (100 records)
+2026-02-02 17:24:50,621 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:50,622 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:50,622 - WARNING - [WARN] No data for SP500 on 2026-01-15 (weekend/holiday)
+2026-02-02 17:24:50,624 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:50,625 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:50,625 - WARNING - [WARN] No data for NASDAQ on 2026-01-15 (weekend/holiday)
+2026-02-02 17:24:50,626 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:50,627 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:50,627 - WARNING - [WARN] No data for DJIA on 2026-01-15 (weekend/holiday)
+2026-02-02 17:24:50,628 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:50,629 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:50,629 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-15 (weekend/holiday)
+2026-02-02 17:24:51,339 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-15.json
+2026-02-02 17:24:51,339 - INFO - 
+--- Processing 2026-01-16 ---
+2026-02-02 17:24:52,055 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-16.csv (100 records)
+2026-02-02 17:24:52,055 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:52,056 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:52,056 - WARNING - [WARN] No data for SP500 on 2026-01-16 (weekend/holiday)
+2026-02-02 17:24:52,057 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:52,057 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:52,059 - WARNING - [WARN] No data for NASDAQ on 2026-01-16 (weekend/holiday)
+2026-02-02 17:24:52,060 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:52,060 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:52,060 - WARNING - [WARN] No data for DJIA on 2026-01-16 (weekend/holiday)
+2026-02-02 17:24:52,062 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:52,062 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:52,063 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-16 (weekend/holiday)
+2026-02-02 17:24:52,770 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-16.json
+2026-02-02 17:24:52,771 - INFO - 
+--- Processing 2026-01-17 ---
+2026-02-02 17:24:53,591 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-17.csv (100 records)
+2026-02-02 17:24:53,592 - INFO - 
+--- Processing 2026-01-18 ---
+2026-02-02 17:24:54,307 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-18.csv (100 records)
+2026-02-02 17:24:54,308 - INFO - 
+--- Processing 2026-01-19 ---
+2026-02-02 17:24:55,023 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-19.csv (100 records)
+2026-02-02 17:24:55,025 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:55,025 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:55,026 - WARNING - [WARN] No data for SP500 on 2026-01-19 (weekend/holiday)
+2026-02-02 17:24:55,027 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:55,027 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:55,028 - WARNING - [WARN] No data for NASDAQ on 2026-01-19 (weekend/holiday)
+2026-02-02 17:24:55,029 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:55,030 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:55,031 - WARNING - [WARN] No data for DJIA on 2026-01-19 (weekend/holiday)
+2026-02-02 17:24:55,032 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:55,032 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:55,033 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-19 (weekend/holiday)
+2026-02-02 17:24:55,840 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-19.json
+2026-02-02 17:24:55,840 - INFO - 
+--- Processing 2026-01-20 ---
+2026-02-02 17:24:56,662 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-20.csv (100 records)
+2026-02-02 17:24:56,664 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:56,666 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:56,666 - WARNING - [WARN] No data for SP500 on 2026-01-20 (weekend/holiday)
+2026-02-02 17:24:56,667 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:56,668 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:56,668 - WARNING - [WARN] No data for NASDAQ on 2026-01-20 (weekend/holiday)
+2026-02-02 17:24:56,669 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:56,670 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:56,671 - WARNING - [WARN] No data for DJIA on 2026-01-20 (weekend/holiday)
+2026-02-02 17:24:56,672 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:56,673 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:56,674 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-20 (weekend/holiday)
+2026-02-02 17:24:57,339 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-20.json
+2026-02-02 17:24:57,339 - INFO - 
+--- Processing 2026-01-21 ---
+2026-02-02 17:24:58,096 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-21.csv (100 records)
+2026-02-02 17:24:58,098 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:58,099 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:58,099 - WARNING - [WARN] No data for SP500 on 2026-01-21 (weekend/holiday)
+2026-02-02 17:24:58,099 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:58,100 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:58,101 - WARNING - [WARN] No data for NASDAQ on 2026-01-21 (weekend/holiday)
+2026-02-02 17:24:58,101 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:58,102 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:58,103 - WARNING - [WARN] No data for DJIA on 2026-01-21 (weekend/holiday)
+2026-02-02 17:24:58,104 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:58,105 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:58,105 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-21 (weekend/holiday)
+2026-02-02 17:24:58,813 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-21.json
+2026-02-02 17:24:58,813 - INFO - 
+--- Processing 2026-01-22 ---
+2026-02-02 17:24:59,632 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-22.csv (100 records)
+2026-02-02 17:24:59,633 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:59,635 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:24:59,635 - WARNING - [WARN] No data for SP500 on 2026-01-22 (weekend/holiday)
+2026-02-02 17:24:59,636 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:59,637 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:24:59,638 - WARNING - [WARN] No data for NASDAQ on 2026-01-22 (weekend/holiday)
+2026-02-02 17:24:59,639 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:59,639 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:24:59,640 - WARNING - [WARN] No data for DJIA on 2026-01-22 (weekend/holiday)
+2026-02-02 17:24:59,641 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:24:59,642 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:24:59,642 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-22 (weekend/holiday)
+2026-02-02 17:25:00,349 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-22.json
+2026-02-02 17:25:00,351 - INFO - 
+--- Processing 2026-01-23 ---
+2026-02-02 17:25:01,072 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-23.csv (100 records)
+2026-02-02 17:25:01,073 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:01,074 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:25:01,075 - WARNING - [WARN] No data for SP500 on 2026-01-23 (weekend/holiday)
+2026-02-02 17:25:01,076 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:01,077 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:25:01,077 - WARNING - [WARN] No data for NASDAQ on 2026-01-23 (weekend/holiday)
+2026-02-02 17:25:01,078 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:01,079 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:25:01,081 - WARNING - [WARN] No data for DJIA on 2026-01-23 (weekend/holiday)
+2026-02-02 17:25:01,082 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:01,083 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:25:01,084 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-23 (weekend/holiday)
+2026-02-02 17:25:01,782 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-23.json
+2026-02-02 17:25:01,783 - INFO - 
+--- Processing 2026-01-24 ---
+2026-02-02 17:25:02,500 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-24.csv (100 records)
+2026-02-02 17:25:02,500 - INFO - 
+--- Processing 2026-01-25 ---
+2026-02-02 17:25:03,217 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-25.csv (100 records)
+2026-02-02 17:25:03,217 - INFO - 
+--- Processing 2026-01-26 ---
+2026-02-02 17:25:03,939 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-26.csv (100 records)
+2026-02-02 17:25:03,941 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:03,941 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:25:03,941 - WARNING - [WARN] No data for SP500 on 2026-01-26 (weekend/holiday)
+2026-02-02 17:25:03,941 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:03,941 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:25:03,941 - WARNING - [WARN] No data for NASDAQ on 2026-01-26 (weekend/holiday)
+2026-02-02 17:25:03,941 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:03,947 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:25:03,947 - WARNING - [WARN] No data for DJIA on 2026-01-26 (weekend/holiday)
+2026-02-02 17:25:03,948 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:03,948 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:25:03,950 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-26 (weekend/holiday)
+2026-02-02 17:25:04,650 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-26.json
+2026-02-02 17:25:04,651 - INFO - 
+--- Processing 2026-01-27 ---
+2026-02-02 17:25:05,374 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-27.csv (100 records)
+2026-02-02 17:25:05,375 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:05,376 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:25:05,376 - WARNING - [WARN] No data for SP500 on 2026-01-27 (weekend/holiday)
+2026-02-02 17:25:05,377 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:05,378 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:25:05,378 - WARNING - [WARN] No data for NASDAQ on 2026-01-27 (weekend/holiday)
+2026-02-02 17:25:05,380 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:05,380 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:25:05,381 - WARNING - [WARN] No data for DJIA on 2026-01-27 (weekend/holiday)
+2026-02-02 17:25:05,382 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:05,382 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:25:05,383 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-27 (weekend/holiday)
+2026-02-02 17:25:06,083 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-27.json
+2026-02-02 17:25:06,084 - INFO - 
+--- Processing 2026-01-28 ---
+2026-02-02 17:25:06,865 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-28.csv (100 records)
+2026-02-02 17:25:06,865 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:06,867 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:25:06,868 - WARNING - [WARN] No data for SP500 on 2026-01-28 (weekend/holiday)
+2026-02-02 17:25:06,869 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:06,869 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:25:06,870 - WARNING - [WARN] No data for NASDAQ on 2026-01-28 (weekend/holiday)
+2026-02-02 17:25:06,871 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:06,871 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:25:06,872 - WARNING - [WARN] No data for DJIA on 2026-01-28 (weekend/holiday)
+2026-02-02 17:25:06,873 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:06,874 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:25:06,874 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-28 (weekend/holiday)
+2026-02-02 17:25:07,619 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-28.json
+2026-02-02 17:25:07,620 - INFO - 
+--- Processing 2026-01-29 ---
+2026-02-02 17:25:08,440 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-29.csv (100 records)
+2026-02-02 17:25:08,443 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:08,444 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:25:08,446 - WARNING - [WARN] No data for SP500 on 2026-01-29 (weekend/holiday)
+2026-02-02 17:25:08,451 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:08,455 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:25:08,463 - WARNING - [WARN] No data for NASDAQ on 2026-01-29 (weekend/holiday)
+2026-02-02 17:25:08,468 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:08,469 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:25:08,474 - WARNING - [WARN] No data for DJIA on 2026-01-29 (weekend/holiday)
+2026-02-02 17:25:08,480 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:08,480 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:25:08,481 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-29 (weekend/holiday)
+2026-02-02 17:25:09,156 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-29.json
+2026-02-02 17:25:09,156 - INFO - 
+--- Processing 2026-01-30 ---
+2026-02-02 17:25:09,974 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-30.csv (100 records)
+2026-02-02 17:25:09,976 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:09,977 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:25:09,977 - WARNING - [WARN] No data for SP500 on 2026-01-30 (weekend/holiday)
+2026-02-02 17:25:09,978 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:09,978 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:25:09,978 - WARNING - [WARN] No data for NASDAQ on 2026-01-30 (weekend/holiday)
+2026-02-02 17:25:09,980 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:09,982 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:25:09,983 - WARNING - [WARN] No data for DJIA on 2026-01-30 (weekend/holiday)
+2026-02-02 17:25:09,983 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:09,984 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:25:09,984 - WARNING - [WARN] No data for RUSSELL2000 on 2026-01-30 (weekend/holiday)
+2026-02-02 17:25:10,691 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-01-30.json
+2026-02-02 17:25:10,691 - INFO - 
+--- Processing 2026-01-31 ---
+2026-02-02 17:25:11,492 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-01-31.csv (100 records)
+2026-02-02 17:25:11,492 - INFO - 
+--- Processing 2026-02-01 ---
+2026-02-02 17:25:12,330 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-02-01.csv (100 records)
+2026-02-02 17:25:13,151 - INFO - [UPLOAD] Ratings data uploaded: ratings-data/fund_ratings_2026-02.json (72 funds rated)
+2026-02-02 17:25:13,152 - INFO - 
+--- Processing 2026-02-02 ---
+2026-02-02 17:25:13,862 - INFO - [UPLOAD] NAV data uploaded: nav-data/nav_2026-02-02.csv (100 records)
+2026-02-02 17:25:13,863 - ERROR - Failed to get ticker '^GSPC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:13,864 - ERROR - ^GSPC: No timezone found, symbol may be delisted
+2026-02-02 17:25:13,865 - WARNING - [WARN] No data for SP500 on 2026-02-02 (weekend/holiday)
+2026-02-02 17:25:13,865 - ERROR - Failed to get ticker '^IXIC' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:13,866 - ERROR - ^IXIC: No timezone found, symbol may be delisted
+2026-02-02 17:25:13,866 - WARNING - [WARN] No data for NASDAQ on 2026-02-02 (weekend/holiday)
+2026-02-02 17:25:13,867 - ERROR - Failed to get ticker '^DJI' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:13,869 - ERROR - ^DJI: No timezone found, symbol may be delisted
+2026-02-02 17:25:13,869 - WARNING - [WARN] No data for DJIA on 2026-02-02 (weekend/holiday)
+2026-02-02 17:25:13,870 - ERROR - Failed to get ticker '^RUT' reason: Expecting value: line 1 column 1 (char 0)
+2026-02-02 17:25:13,870 - ERROR - ^RUT: No timezone found, symbol may be delisted
+2026-02-02 17:25:13,871 - WARNING - [WARN] No data for RUSSELL2000 on 2026-02-02 (weekend/holiday)
+2026-02-02 17:25:14,582 - INFO - [UPLOAD] Market data uploaded: market-data/market_2026-02-02.json
+2026-02-02 17:25:14,583 - INFO - 
+======================================================================
+2026-02-02 17:25:14,583 - INFO - DATA GENERATION COMPLETE!
+2026-02-02 17:25:14,583 - INFO - ======================================================================
+2026-02-02 17:25:14,584 - INFO - NAV files uploaded: 101
+2026-02-02 17:25:14,584 - INFO - Market data files uploaded: 71
+2026-02-02 17:25:14,584 - INFO - Ratings files uploaded: 4
+2026-02-02 17:25:14,585 - INFO - Fund metadata files uploaded: 1
+2026-02-02 17:25:14,585 - INFO - ======================================================================
+2026-02-02 17:25:14,585 - INFO - 
+Check your GCS bucket: gs://finance-data-landing-bucket-poc/
+2026-02-02 17:25:14,585 - INFO - Next steps:
+2026-02-02 17:25:14,586 - INFO - 1. Set up Snowflake external stage pointing to this bucket
+2026-02-02 17:25:14,586 - INFO - 2. Configure Snowpipe for auto-ingestion
+2026-02-02 17:25:14,587 - INFO - 3. Run dbt transformations
