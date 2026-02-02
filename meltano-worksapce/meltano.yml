@@ -1,74 +1,111 @@
 version: 1
+project_id: finance-data-pipeline-poc
 send_anonymous_usage_stats: false
-project_id: poc-data-pipeline
+
+environments:
+- name: dev
+- name: prod
+
+default_environment: dev
 
 plugins:
   extractors:
-  
-  # Source: PostgreSQL
   - name: tap-postgres
-    variant: meltanolabs
-    pip_url: git+https://github.com/MeltanoLabs/tap-postgres.git
+    variant: transferwise
+    pip_url: pipelinewise-tap-postgres
     config:
+      # Container-to-container communication
       host: postgres
       port: 5432
-      user: postgres
-      password: postgres
-      database: business_db
-      filter_schemas: ['public']
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+      dbname: ${MELTANO_POSTGRES_SOURCE_DATABASE}
       
-    # Configure incremental/full per table
+      # Replication settings
+      default_replication_method: INCREMENTAL
+      
+      # Filter to only finance_schema
+      filter_schemas:
+        - finance_schema
+    
+    # Table selection for Phase 1 (3 tables)
+    select:
+    - finance_schema-funds.*
+    - finance_schema-transactions.*
+    - finance_schema-fund_holdings.*
+    
+    # Metadata configuration for incremental loads
     metadata:
-      public-orders:
+      finance_schema-funds:
         replication-method: INCREMENTAL
         replication-key: updated_at
       
-      public-products:
-        replication-method: FULL_TABLE
-  
-  # Source: GCS (if needed)
-  - name: tap-gcs
-    variant: meltanolabs
-    pip_url: tap-gcs
-    config:
-      bucket: ${GCS_BUCKET}
-      start_date: '2026-01-01T00:00:00Z'
+      finance_schema-transactions:
+        replication-method: INCREMENTAL
+        replication-key: transaction_id
       
+      finance_schema-fund_holdings:
+        replication-method: INCREMENTAL
+        replication-key: updated_at
+
   loaders:
-  
-  # Destination: Snowflake
   - name: target-snowflake
-    variant: meltanolabs
-    pip_url: meltanolabs-target-snowflake
+    variant: transferwise
+    pip_url: pipelinewise-target-snowflake
     config:
-      account: ${SNOWFLAKE_ACCOUNT}
-      user: ${SNOWFLAKE_USER}
-      password: ${SNOWFLAKE_PASSWORD}
-      warehouse: ${SNOWFLAKE_WAREHOUSE}
-      database: ${SNOWFLAKE_DATABASE}
-      schema: ${SNOWFLAKE_SCHEMA}
-      role: ${SNOWFLAKE_ROLE}
+      # Snowflake connection details
+      account: ${MELTANO_SNOWFLAKE_ACCOUNT}
+      username: ${MELTANO_SNOWFLAKE_USER}
+      password: ${MELTANO_SNOWFLAKE_PASSWORD}
+      warehouse: ${MELTANO_SNOWFLAKE_WAREHOUSE}
+      database: ${MELTANO_SNOWFLAKE_DATABASE}
+      default_target_schema: ${MELTANO_SNOWFLAKE_SCHEMA}
+      role: ${MELTANO_SNOWFLAKE_ROLE}
       
-      # Schema evolution settings
-      add_record_metadata: true
-      hard_delete: false
+      # Performance settings
+      parallelism: 4
+      max_parallelism: 8
       
-  # Destination: Postgres (for testing)
-  - name: target-postgres
-    variant: meltanolabs
-    pip_url: meltanolabs-target-postgres
-    config:
-      host: postgres
-      port: 5432
-      user: postgres
-      password: postgres
-      database: business_db
-      default_target_schema: raw_data
-      add_record_metadata: true
+      # ===================================================================
+      # GCS STAGING CONFIGURATION 
+      # ===================================================================
+      
+      # GCS bucket for staging files
+      gcs_bucket: ${GCS_MELTANO_STAGING_BUCKET_NAME}
+      
+      # Staging folder prefix
+      stage_prefix: ${GCS_MELTANO_STAGING_BUCKET_FOLDER}/
+      
+      # Snowflake stage name (we'll create this in Snowflake)
+      stage: ${MELTANO_SNOWFLAKE_RAW_TABLES_STAGE}
+      
+      # File format (we'll create this in Snowflake)
+      file_format: ${MELTANO_SNOWFLAKE_RAW_TABLES_FILE_FORMAT}
+      
+      # GCS authentication using service account JSON
+      client_side_encryption_master_key: null
+      gcp_project: null
+      
+      # ===================================================================
+      # GCP CREDENTIALS (Using your existing service account)
+      # ===================================================================
+      # Path to your GCP service account JSON key
+      # This should be mounted into the Meltano container
+      google_application_credentials: ${GOOGLE_APPLICATION_CREDENTIALS}
+      
+      # Schema handling
+      add_metadata_columns: true
+      hard_delete: true
+      
+      # Batch settings
+      batch_size_rows: 100000
+      flush_all_streams: false
+      
+      # AWS settings (not used with GCS)
+      s3_bucket: null
+      aws_access_key_id: null
+      aws_secret_access_key: null
+      aws_session_token: null
+      aws_profile: null
 
-# NO SCHEDULES - Airflow handles all scheduling
 schedules: []
-
-# NO ENVIRONMENTS needed for simple POC
-environments:
-- name: dev
