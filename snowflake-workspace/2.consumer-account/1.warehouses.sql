@@ -1,0 +1,31 @@
+--==============================
+-- SEE ALL WAREHOUSE
+--==============================
+
+SHOW WAREHOUSES
+
+--==============================
+-- CREATE WAREHOUSES 
+--==============================
+
+-- FOR ANALYTICS QUERIES, SUPERSER
+
+CREATE OR REPLACE WAREHOUSE POC_ANALYTICS_WAREHOUSE
+WITH
+WAREHOUSE_SIZE = SMALL
+AUTO_SUSPEND = 180
+AUTO_RESUME = TRUE
+COMMENT = 'FOR ANALYTICS QUERIES';
+
+-- FOR DBEAVER/ADHOC
+
+CREATE OR REPLACE WAREHOUSE POC_ADHOC_WAREHOUSE
+WITH
+WAREHOUSE_SIZE = SMALL
+AUTO_SUSPEND = 180
+AUTO_RESUME = TRUE
+COMMENT = 'FOR ADHOC QUERIES';
+
+--==============================
+-- END OF WAREHOUSES
+--==============================

@@ -30,7 +30,14 @@ DESC SHARE UAHYRSV.ZJ51694.POC_SHARE; -- MAY OR MAY NOT WORK BASED ON THE PERMIS
 
 CREATE OR REPLACE DATABASE POC_DATABASE_SHARED
 FROM SHARE UAHYRSV.ZJ51694.POC_SHARE
---
+
+--====================================
+-- VERIYING SHARE DATABASE
+--====================================
 
 SELECT *
 FROM POC_DATABASE_SHARED.POC_SCHEMA.TEST_INTO
+
+--====================================
+-- END OF SHARES
+--====================================
