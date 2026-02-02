@@ -1,3 +1,4 @@
 persistent-store/postgres-data/
 persistent-store/postgres-internal-data/
 persistent-store/airflow-data/logs/
+gcp-workspace/gcs-data-generator/gcp-gcs-credentials.json
