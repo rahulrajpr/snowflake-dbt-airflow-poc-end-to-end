@@ -1,0 +1,165 @@
+2026-02-02 12:37:12,016 - INFO - ============================================================
+2026-02-02 12:37:12,027 - INFO - ============================================================
+2026-02-02 12:37:12,210 - INFO - 
+============================================================
+2026-02-02 12:37:12,211 - INFO - ============================================================
+2026-02-02 12:37:12,283 - INFO - 
+============================================================
+2026-02-02 12:37:12,284 - INFO - ============================================================
+2026-02-02 12:37:12,382 - INFO - 
+============================================================
+2026-02-02 12:37:12,382 - INFO - ============================================================
+2026-02-02 12:37:13,408 - INFO - 
+============================================================
+2026-02-02 12:37:13,408 - INFO - ============================================================
+2026-02-02 12:37:15,045 - INFO - 
+============================================================
+2026-02-02 12:37:15,046 - INFO - ============================================================
+2026-02-02 12:41:10,827 - INFO - ============================================================
+2026-02-02 12:41:10,827 - INFO - FINANCIAL DATA GENERATOR - STARTING
+2026-02-02 12:41:10,828 - INFO - ============================================================
+2026-02-02 12:41:10,939 - INFO - [OK] Database connection established
+2026-02-02 12:41:10,939 - INFO - 
+[INFO] Checking current database state...
+2026-02-02 12:41:10,949 - INFO - [INFO] Current fund_managers: 50 rows
+2026-02-02 12:41:10,959 - INFO - [INFO] Current funds: 100 rows
+2026-02-02 12:41:10,967 - INFO - [INFO] Current investors: 1000 rows
+2026-02-02 12:41:10,978 - INFO - [INFO] Current accounts: 2500 rows
+2026-02-02 12:41:10,987 - INFO - [INFO] Current fund_holdings: 0 rows
+2026-02-02 12:41:10,997 - INFO - [INFO] Current transactions: 0 rows
+2026-02-02 12:41:11,004 - INFO - [INFO] Current account_balances: 0 rows
+2026-02-02 12:41:11,004 - INFO - 
+============================================================
+2026-02-02 12:41:11,004 - INFO - STEP 1: FUND MANAGERS
+2026-02-02 12:41:11,005 - INFO - ============================================================
+2026-02-02 12:41:11,005 - INFO - [SKIP] fund_managers (already have 50)
+2026-02-02 12:41:11,005 - INFO - 
+============================================================
+2026-02-02 12:41:11,005 - INFO - STEP 2: FUNDS
+2026-02-02 12:41:11,005 - INFO - ============================================================
+2026-02-02 12:41:11,005 - INFO - [SKIP] funds (already have 100)
+2026-02-02 12:41:11,005 - INFO - 
+============================================================
+2026-02-02 12:41:11,006 - INFO - STEP 3: INVESTORS
+2026-02-02 12:41:11,006 - INFO - ============================================================
+2026-02-02 12:41:11,006 - INFO - [SKIP] investors (already have 1000)
+2026-02-02 12:41:11,006 - INFO - 
+============================================================
+2026-02-02 12:41:11,006 - INFO - STEP 4: ACCOUNTS
+2026-02-02 12:41:11,006 - INFO - ============================================================
+2026-02-02 12:41:11,006 - INFO - [SKIP] accounts (already have 2500)
+2026-02-02 12:41:11,008 - INFO - 
+============================================================
+2026-02-02 12:41:11,008 - INFO - STEP 5: FUND HOLDINGS
+2026-02-02 12:41:11,008 - INFO - ============================================================
+2026-02-02 12:41:11,016 - INFO - [START] Generating 7500 fund holdings...
+2026-02-02 12:41:15,775 - INFO - [DONE] Generated 7500 fund holdings
+2026-02-02 12:41:15,778 - INFO - 
+============================================================
+2026-02-02 12:41:15,778 - INFO - STEP 6: TRANSACTIONS
+2026-02-02 12:41:15,778 - INFO - ============================================================
+2026-02-02 12:41:15,779 - INFO - [START] Generating 50000 transactions...
+2026-02-02 12:41:18,188 - INFO -   [BATCH] Inserted batch 1/50
+2026-02-02 12:41:18,848 - INFO -   [BATCH] Inserted batch 2/50
+2026-02-02 12:41:19,514 - INFO -   [BATCH] Inserted batch 3/50
+2026-02-02 12:41:20,155 - INFO -   [BATCH] Inserted batch 4/50
+2026-02-02 12:41:20,814 - INFO -   [BATCH] Inserted batch 5/50
+2026-02-02 12:41:21,558 - INFO -   [BATCH] Inserted batch 6/50
+2026-02-02 12:41:22,212 - INFO -   [BATCH] Inserted batch 7/50
+2026-02-02 12:41:22,858 - INFO -   [BATCH] Inserted batch 8/50
+2026-02-02 12:41:23,516 - INFO -   [BATCH] Inserted batch 9/50
+2026-02-02 12:41:24,168 - INFO -   [BATCH] Inserted batch 10/50
+2026-02-02 12:41:24,819 - INFO -   [BATCH] Inserted batch 11/50
+2026-02-02 12:41:25,492 - INFO -   [BATCH] Inserted batch 12/50
+2026-02-02 12:41:26,163 - INFO -   [BATCH] Inserted batch 13/50
+2026-02-02 12:41:26,832 - INFO -   [BATCH] Inserted batch 14/50
+2026-02-02 12:41:27,485 - INFO -   [BATCH] Inserted batch 15/50
+2026-02-02 12:41:28,146 - INFO -   [BATCH] Inserted batch 16/50
+2026-02-02 12:41:28,802 - INFO -   [BATCH] Inserted batch 17/50
+2026-02-02 12:41:29,452 - INFO -   [BATCH] Inserted batch 18/50
+2026-02-02 12:41:30,099 - INFO -   [BATCH] Inserted batch 19/50
+2026-02-02 12:41:30,748 - INFO -   [BATCH] Inserted batch 20/50
+2026-02-02 12:41:31,426 - INFO -   [BATCH] Inserted batch 21/50
+2026-02-02 12:41:32,069 - INFO -   [BATCH] Inserted batch 22/50
+2026-02-02 12:41:32,722 - INFO -   [BATCH] Inserted batch 23/50
+2026-02-02 12:41:33,374 - INFO -   [BATCH] Inserted batch 24/50
+2026-02-02 12:41:34,029 - INFO -   [BATCH] Inserted batch 25/50
+2026-02-02 12:41:34,688 - INFO -   [BATCH] Inserted batch 26/50
+2026-02-02 12:41:35,329 - INFO -   [BATCH] Inserted batch 27/50
+2026-02-02 12:41:35,988 - INFO -   [BATCH] Inserted batch 28/50
+2026-02-02 12:41:36,650 - INFO -   [BATCH] Inserted batch 29/50
+2026-02-02 12:41:37,308 - INFO -   [BATCH] Inserted batch 30/50
+2026-02-02 12:41:37,962 - INFO -   [BATCH] Inserted batch 31/50
+2026-02-02 12:41:38,632 - INFO -   [BATCH] Inserted batch 32/50
+2026-02-02 12:41:39,274 - INFO -   [BATCH] Inserted batch 33/50
+2026-02-02 12:41:39,925 - INFO -   [BATCH] Inserted batch 34/50
+2026-02-02 12:41:40,591 - INFO -   [BATCH] Inserted batch 35/50
+2026-02-02 12:41:41,270 - INFO -   [BATCH] Inserted batch 36/50
+2026-02-02 12:41:41,989 - INFO -   [BATCH] Inserted batch 37/50
+2026-02-02 12:41:42,650 - INFO -   [BATCH] Inserted batch 38/50
+2026-02-02 12:41:43,303 - INFO -   [BATCH] Inserted batch 39/50
+2026-02-02 12:41:43,947 - INFO -   [BATCH] Inserted batch 40/50
+2026-02-02 12:41:44,613 - INFO -   [BATCH] Inserted batch 41/50
+2026-02-02 12:41:45,273 - INFO -   [BATCH] Inserted batch 42/50
+2026-02-02 12:41:45,942 - INFO -   [BATCH] Inserted batch 43/50
+2026-02-02 12:41:46,603 - INFO -   [BATCH] Inserted batch 44/50
+2026-02-02 12:41:47,266 - INFO -   [BATCH] Inserted batch 45/50
+2026-02-02 12:41:47,927 - INFO -   [BATCH] Inserted batch 46/50
+2026-02-02 12:41:48,610 - INFO -   [BATCH] Inserted batch 47/50
+2026-02-02 12:41:49,262 - INFO -   [BATCH] Inserted batch 48/50
+2026-02-02 12:41:49,955 - INFO -   [BATCH] Inserted batch 49/50
+2026-02-02 12:41:50,632 - INFO -   [BATCH] Inserted batch 50/50
+2026-02-02 12:41:50,665 - INFO - [DONE] Generated 50000 transactions
+2026-02-02 12:41:50,675 - INFO - 
+============================================================
+2026-02-02 12:41:50,676 - INFO - STEP 7: ACCOUNT BALANCES
+2026-02-02 12:41:50,676 - INFO - ============================================================
+2026-02-02 12:41:50,683 - INFO - [START] Generating 100 days of balance history for 2500 accounts...
+2026-02-02 12:41:50,685 - INFO - [INFO] No existing balances, starting from 2025-10-25
+2026-02-02 12:42:05,381 - INFO -   [BATCH] Inserted batch of 11664 balance records
+2026-02-02 12:42:19,522 - INFO -   [BATCH] Inserted batch of 11707 balance records
+2026-02-02 12:42:34,235 - INFO -   [BATCH] Inserted batch of 11751 balance records
+2026-02-02 12:42:48,607 - INFO -   [BATCH] Inserted batch of 11788 balance records
+2026-02-02 12:43:03,033 - INFO -   [BATCH] Inserted batch of 11827 balance records
+2026-02-02 12:43:17,338 - INFO -   [BATCH] Inserted batch of 11877 balance records
+2026-02-02 12:43:32,135 - INFO -   [BATCH] Inserted batch of 11933 balance records
+2026-02-02 12:43:46,693 - INFO -   [BATCH] Inserted batch of 11974 balance records
+2026-02-02 12:44:01,690 - INFO -   [BATCH] Inserted batch of 12031 balance records
+2026-02-02 12:44:16,301 - INFO -   [BATCH] Inserted batch of 12071 balance records
+2026-02-02 12:44:31,130 - INFO -   [BATCH] Inserted batch of 12138 balance records
+2026-02-02 12:44:46,056 - INFO -   [BATCH] Inserted batch of 12165 balance records
+2026-02-02 12:45:01,034 - INFO -   [BATCH] Inserted batch of 12194 balance records
+2026-02-02 12:45:16,151 - INFO -   [BATCH] Inserted batch of 12241 balance records
+2026-02-02 12:45:31,329 - INFO -   [BATCH] Inserted batch of 12273 balance records
+2026-02-02 12:45:46,244 - INFO -   [BATCH] Inserted batch of 12298 balance records
+2026-02-02 12:46:01,458 - INFO -   [BATCH] Inserted batch of 12334 balance records
+2026-02-02 12:46:16,603 - INFO -   [BATCH] Inserted batch of 12385 balance records
+2026-02-02 12:46:31,738 - INFO -   [BATCH] Inserted batch of 12426 balance records
+2026-02-02 12:46:47,144 - INFO -   [BATCH] Inserted batch of 12475 balance records
+2026-02-02 12:46:50,134 - INFO - [DONE] Generated 244052 account balance records
+2026-02-02 12:46:50,134 - INFO - 
+============================================================
+2026-02-02 12:46:50,134 - INFO - FINAL DATABASE STATE
+2026-02-02 12:46:50,136 - INFO - ============================================================
+2026-02-02 12:46:50,138 - INFO - [INFO] Current fund_managers: 50 rows
+2026-02-02 12:46:50,140 - INFO - [INFO] Current funds: 100 rows
+2026-02-02 12:46:50,142 - INFO - [INFO] Current investors: 1000 rows
+2026-02-02 12:46:50,143 - INFO - [INFO] Current accounts: 2500 rows
+2026-02-02 12:46:50,157 - INFO - [INFO] Current fund_holdings: 7500 rows
+2026-02-02 12:46:50,177 - INFO - [INFO] Current transactions: 50000 rows
+2026-02-02 12:46:50,258 - INFO - [INFO] Current account_balances: 244052 rows
+2026-02-02 12:46:50,258 - INFO - 
+============================================================
+2026-02-02 12:46:50,258 - INFO - DATA VALIDATION
+2026-02-02 12:46:50,258 - INFO - ============================================================
+2026-02-02 12:46:50,258 - INFO - [START] Running data validation...
+2026-02-02 12:46:50,258 - INFO - [OK] Orphaned accounts: PASS
+2026-02-02 12:46:50,258 - INFO - [OK] Orphaned funds: PASS
+2026-02-02 12:46:50,258 - INFO - [OK] Invalid holdings: PASS
+2026-02-02 12:46:50,271 - INFO - [OK] Transactions with invalid accounts: PASS
+2026-02-02 12:46:50,271 - INFO - [DONE] All validation checks passed!
+2026-02-02 12:46:50,271 - INFO - 
+============================================================
+2026-02-02 12:46:50,271 - INFO - DATA GENERATION COMPLETE!
+2026-02-02 12:46:50,271 - INFO - ============================================================
+2026-02-02 12:46:50,273 - INFO - Check data_generation.log for detailed logs
