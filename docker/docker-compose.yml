@@ -62,7 +62,7 @@ services:
       retries: 5
 
   # =================================================================
-  # AIRFLOW
+  # AIRFLOW - UPDATED WITH DOCKER_HOST
   # =================================================================
 
   # Airflow Database Initialization (runs once)
@@ -102,20 +102,24 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal/${POSTGRES_INTERNAL_DB}
       AIRFLOW__CORE__LOAD_EXAMPLES: "False"
       AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY}
+      DOCKER_HOST: unix:///var/run/docker.sock
     volumes:
       - ${AIRFLOW_DATA_PATH}:/opt/airflow
       - ${AIRFLOW_DAGS_PATH}:/opt/airflow/dags
       - ${AIRFLOW_LOGS_PATH}:/opt/airflow/logs
       - ${AIRFLOW_PLUGINS_PATH}:/opt/airflow/plugins
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "${AIRFLOW_PORT}:8080"
     command: >
       bash -c "
+        export DOCKER_API_VERSION=1.44 &&
         airflow db upgrade &&
         airflow webserver --port 8080
       "
     networks:
       - shared-network
+    user: "0:0"
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
       interval: 30s
@@ -137,14 +141,18 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_INTERNAL_USER}:${POSTGRES_INTERNAL_PASSWORD}@postgres_internal/${POSTGRES_INTERNAL_DB}
       AIRFLOW__CORE__LOAD_EXAMPLES: "False"
       AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY}
+      DOCKER_HOST: unix:///var/run/docker.sock
+      DOCKER_API_VERSION: "1.44"
     volumes:
       - ${AIRFLOW_DATA_PATH}:/opt/airflow
       - ${AIRFLOW_DAGS_PATH}:/opt/airflow/dags
       - ${AIRFLOW_LOGS_PATH}:/opt/airflow/logs
       - ${AIRFLOW_PLUGINS_PATH}:/opt/airflow/plugins
+      - /var/run/docker.sock:/var/run/docker.sock
     command: airflow scheduler
     networks:
       - shared-network
+    user: "0:0"
 
   # =================================================================
   # DBT
@@ -247,20 +255,9 @@ services:
       timeout: 10s
       retries: 5
 
-# =================================================================
-  # MELTANO
-  # =================================================================
-
-  # Meltano for ELT
   # =================================================================
   # MELTANO
   # =================================================================
-
-  # Meltano for ELT
-  # =================================================================
-  # MELTANO - Pure ELT Engine (No Scheduling, No Transforms)
-  # =================================================================
-
   meltano:
     image: meltano/meltano:latest
     container_name: meltano-container
@@ -269,36 +266,74 @@ services:
       postgres:
         condition: service_healthy
     environment:
+      # Meltano system config
       MELTANO_DATABASE_URI: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       MELTANO_PROJECT_ROOT: /project
       MELTANO_CLI_LOG_LEVEL: info
       MELTANO_DISABLE_TRACKING: true
+      
+      # PostgreSQL source config
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      MELTANO_POSTGRES_SOURCE_DATABASE: ${POSTGRES_DB}
+      
+      # Snowflake target config
+      MELTANO_SNOWFLAKE_ACCOUNT: ${MELTANO_SNOWFLAKE_ACCOUNT}
+      MELTANO_SNOWFLAKE_USER: ${MELTANO_SNOWFLAKE_USER}
+      MELTANO_SNOWFLAKE_PASSWORD: ${MELTANO_SNOWFLAKE_PASSWORD}
+      MELTANO_SNOWFLAKE_WAREHOUSE: ${MELTANO_SNOWFLAKE_WAREHOUSE}
+      MELTANO_SNOWFLAKE_DATABASE: ${MELTANO_SNOWFLAKE_DATABASE}
+      MELTANO_SNOWFLAKE_SCHEMA: POSTGRES_RAW
+      MELTANO_SNOWFLAKE_ROLE: ${MELTANO_SNOWFLAKE_ROLE}
+      
+      # GCS staging config
+      GCS_MELTANO_STAGING_BUCKET_NAME: ${GCS_MELTANO_STAGING_BUCKET_NAME}
+      GCS_MELTANO_STAGING_BUCKET_FOLDER: ${GCS_MELTANO_STAGING_BUCKET_FOLDER}
+      MELTANO_SNOWFLAKE_RAW_TABLES_STAGE: ${MELTANO_SNOWFLAKE_RAW_TABLES_STAGE}
+      MELTANO_SNOWFLAKE_RAW_TABLES_FILE_FORMAT: ${MELTANO_SNOWFLAKE_RAW_TABLES_FILE_FORMAT}
+      GOOGLE_APPLICATION_CREDENTIALS: /project/gcp-credentials.json
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
+      
     volumes:
       - ${MELTANO_PROJECT_PATH}:/project
       - ${MELTANO_DATA_PATH}:/meltano-data
+      - ${GOOGLE_APPLICATION_CREDENTIALS}:/project/gcp-credentials.json:ro
     working_dir: /project
     entrypoint: ["/bin/bash"]
     command: 
       - "-c"
       - |
         echo '=== Meltano ELT Engine Started ==='
+
+        # Install system dependencies
+        pip install psycopg2-binary
         
+        # Check if meltano.yml exists
         if [ ! -f meltano.yml ]; then
           echo '=== Initializing Meltano project ==='
           meltano init . --no_usage_stats
         fi
         
+        # Install plugins
         echo '=== Installing extractors and loaders ==='
         meltano install || true
         
+        # PERMANENT FIX: Fix numpy/pandas in target-snowflake venv
+        echo '=== Fixing target-snowflake dependencies ==='
+        if [ -d /project/.meltano/loaders/target-snowflake/venv ]; then
+          /project/.meltano/loaders/target-snowflake/venv/bin/pip uninstall -y numpy pandas
+          /project/.meltano/loaders/target-snowflake/venv/bin/pip install 'numpy<2.0' 'pandas<2.0'
+          echo '✓ target-snowflake dependencies fixed'
+        fi
+        
         echo '=== Meltano ready for Airflow orchestration ==='
-        echo 'Connections configured, waiting for Airflow to trigger jobs...'
-        echo 'Run manually: docker exec meltano-container meltano run <extractor> <loader>'
+        echo 'Run: docker exec meltano-container meltano run tap-postgres target-snowflake'
         
         tail -f /dev/null
     networks:
       - shared-network
-      
+  
 # =================================================================
 # NETWORK
 # =================================================================
