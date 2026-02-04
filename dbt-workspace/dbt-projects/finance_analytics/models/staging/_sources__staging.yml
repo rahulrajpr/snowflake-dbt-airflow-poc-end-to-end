@@ -1,0 +1,433 @@
+version: 2
+
+sources:
+  # ============================================
+  # LANDING LAYER - Consolidated Source Views
+  # ============================================
+  - name: landing
+    description: "Consolidated landing layer views from PostgreSQL (via Trino) and GCS (via Snowpipe) sources"
+    database: finance_db
+    schema: landing
+    
+    # Freshness checks - data should be updated daily
+    freshness:
+      warn_after: {count: 24, period: hour}
+      # error_after: {count: 48, period: hour}
+    
+    # Apply to all tables by default
+    loaded_at_field: load_timestamp
+    
+    tables:
+      # ==========================================
+      # PostgreSQL Sources (Transactional Data)
+      # ==========================================
+      
+      - name: vw_investors
+        description: "Investor master data - individuals who hold investment accounts"
+        columns:
+          - name: investor_id
+            description: "Unique investor identifier (Primary Key)"
+            tests:
+              - unique
+              - not_null
+          
+          - name: email
+            description: "Investor email address"
+            tests:
+              - not_null
+          
+          - name: kyc_status
+            description: "Know Your Customer verification status"
+            tests:
+              - accepted_values:
+                  values: ['PENDING', 'VERIFIED', 'REJECTED', 'EXPIRED']
+          
+          - name: risk_profile
+            description: "Investor risk tolerance level"
+            tests:
+              - accepted_values:
+                  values: ['Conservative', 'Moderate', 'Aggressive']
+          
+          - name: customer_segment
+            description: "Customer segmentation category"
+            tests:
+              - accepted_values:
+                  values: ['Retail', 'HNI', 'Corporate', 'Institutional']
+          
+          - name: is_active
+            description: "Whether investor account is currently active"
+            tests:
+              - not_null
+      
+      - name: vw_accounts
+        description: "Investment accounts linked to investors"
+        columns:
+          - name: account_id
+            description: "Unique account identifier (Primary Key)"
+            tests:
+              - unique
+              - not_null
+          
+          - name: account_number
+            description: "Human-readable account number"
+            tests:
+              - unique
+              - not_null
+          
+          - name: investor_id
+            description: "Foreign key to investors table"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('landing', 'vw_investors')
+                  field: investor_id
+          
+          - name: account_type
+            description: "Type of investment account"
+            tests:
+              - accepted_values:
+                  values: ['SAVINGS', 'RETIREMENT', 'BROKERAGE', 'TRUST']
+          
+          - name: account_status
+            description: "Current status of the account"
+            tests:
+              - accepted_values:
+                  values: ['ACTIVE', 'INACTIVE', 'CLOSED', 'SUSPENDED']
+          
+          - name: currency
+            description: "Account base currency"
+            tests:
+              - accepted_values:
+                  values: ['USD', 'EUR', 'GBP', 'INR']
+      
+      - name: vw_transactions
+        description: "All buy/sell/transfer transactions for mutual funds"
+        columns:
+          - name: transaction_id
+            description: "Unique transaction identifier (Primary Key)"
+            tests:
+              - unique
+              - not_null
+          
+          - name: transaction_number
+            description: "Human-readable transaction reference number"
+            tests:
+              - unique
+              - not_null
+          
+          - name: account_id
+            description: "Foreign key to accounts"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('landing', 'vw_accounts')
+                  field: account_id
+          
+          - name: fund_id
+            description: "Foreign key to funds"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('landing', 'vw_funds')
+                  field: fund_id
+          
+          - name: transaction_type
+            description: "Type of transaction"
+            tests:
+              - accepted_values:
+                  values: ['BUY', 'SELL', 'SWITCH', 'DIVIDEND', 'TRANSFER']
+          
+          - name: transaction_date
+            description: "Date transaction was initiated"
+            tests:
+              - not_null
+          
+          - name: amount
+            description: "Transaction amount in account currency"
+            tests:
+              - not_null
+          
+          - name: transaction_status
+            description: "Current status of transaction"
+            tests:
+              - accepted_values:
+                  values: ['PENDING', 'COMPLETED', 'FAILED', 'CANCELLED']
+      
+      - name: vw_fund_holdings
+        description: "Current fund holdings by account - snapshot of positions"
+        columns:
+          - name: holding_id
+            description: "Unique holding record identifier (Primary Key)"
+            tests:
+              - unique
+              - not_null
+          
+          - name: account_id
+            description: "Foreign key to accounts"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('landing', 'vw_accounts')
+                  field: account_id
+          
+          - name: fund_id
+            description: "Foreign key to funds"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('landing', 'vw_funds')
+                  field: fund_id
+          
+          - name: units_held
+            description: "Number of fund units held"
+            tests:
+              - not_null
+          
+          - name: current_value
+            description: "Current market value of holding"
+            tests:
+              - not_null
+      
+      - name: vw_account_balances
+        description: "Daily account balance snapshots - time series data"
+        columns:
+          - name: balance_id
+            description: "Unique balance record identifier (Primary Key)"
+            tests:
+              - unique
+              - not_null
+          
+          - name: account_id
+            description: "Foreign key to accounts"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('landing', 'vw_accounts')
+                  field: account_id
+          
+          - name: balance_date
+            description: "Date of balance snapshot"
+            tests:
+              - not_null
+          
+          - name: closing_balance
+            description: "End-of-day account balance"
+            tests:
+              - not_null
+      
+      - name: vw_funds
+        description: "Mutual fund master data"
+        columns:
+          - name: fund_id
+            description: "Unique fund identifier (Primary Key)"
+            tests:
+              - unique
+              - not_null
+          
+          - name: fund_code
+            description: "Human-readable fund code"
+            tests:
+              - unique
+              - not_null
+          
+          - name: fund_name
+            description: "Full fund name"
+            tests:
+              - not_null
+          
+          - name: fund_category
+            description: "Fund investment category"
+            tests:
+              - accepted_values:
+                  values: ['Equity', 'Debt', 'Hybrid', 'Liquid', 'Gold']
+          
+          - name: fund_type
+            description: "Fund structure type"
+            tests:
+              - accepted_values:
+                  values: ['OPEN', 'CLOSED']
+          
+          - name: manager_id
+            description: "Foreign key to fund managers"
+            tests:
+              - relationships:
+                  to: source('landing', 'vw_fund_managers')
+                  field: manager_id
+          
+          - name: is_active
+            description: "Whether fund is currently available for investment"
+            tests:
+              - not_null
+      
+      - name: vw_fund_managers
+        description: "Fund manager information"
+        columns:
+          - name: manager_id
+            description: "Unique manager identifier (Primary Key)"
+            tests:
+              - unique
+              - not_null
+          
+          - name: manager_code
+            description: "Human-readable manager code"
+            tests:
+              - unique
+              - not_null
+          
+          - name: first_name
+            description: "Manager first name"
+            tests:
+              - not_null
+          
+          - name: last_name
+            description: "Manager last name"
+            tests:
+              - not_null
+          
+          - name: years_experience
+            description: "Years of fund management experience"
+          
+          - name: is_active
+            description: "Whether manager is currently active"
+            tests:
+              - not_null
+      
+      # ==========================================
+      # GCS Sources (External Data Files)
+      # ==========================================
+      
+      - name: vw_nav_data
+        description: "Daily Net Asset Value (NAV) pricing data from external feed"
+        columns:
+          - name: date
+            description: "NAV calculation date"
+            tests:
+              - not_null
+          
+          - name: fund_code
+            description: "Fund identifier matching funds table"
+            tests:
+              - not_null
+          
+          - name: nav
+            description: "Net Asset Value per unit"
+            tests:
+              - not_null
+          
+          - name: change_percent
+            description: "Day-over-day NAV change percentage"
+          
+          - name: total_assets
+            description: "Total fund assets under management"
+      
+      - name: vw_fund_metadata
+        description: "Extended fund metadata from external source"
+        columns:
+          - name: fund_code
+            description: "Fund identifier"
+            tests:
+              - not_null
+          
+          - name: fund_name
+            description: "Fund name"
+          
+          - name: fund_category
+            description: "Investment category"
+          
+          - name: inception_date
+            description: "Fund launch date"
+          
+          - name: investment_objective
+            description: "Fund investment objective description"
+          
+          - name: risk_rating
+            description: "Risk rating from external source"
+            tests:
+              - accepted_values:
+                  values: ['Low', 'Low-Medium', 'Medium', 'Medium-High', 'High']
+      
+      - name: vw_market_data
+        description: "Market benchmark indices data (S&P 500, NASDAQ, etc.)"
+        columns:
+          - name: date
+            description: "Market data date"
+            tests:
+              - not_null
+          
+          - name: index_name
+            description: "Name of the market index"
+            tests:
+              - not_null
+          
+          - name: ticker
+            description: "Index ticker symbol"
+          
+          - name: value
+            description: "Index closing value"
+            tests:
+              - not_null
+          
+          - name: change_percent
+            description: "Day-over-day percentage change"
+      
+      - name: vw_ratings_data
+        description: "External fund ratings from rating agencies"
+        columns:
+          - name: report_date
+            description: "Rating report date"
+            tests:
+              - not_null
+          
+          - name: vendor
+            description: "Rating agency name"
+            tests:
+              - not_null
+          
+          - name: fund_code
+            description: "Fund identifier"
+            tests:
+              - not_null
+          
+          - name: fund_name
+            description: "Fund name"
+          
+          - name: overall_rating
+            description: "Overall rating score (1-5)"
+            tests:
+              - not_null
+              - accepted_values:
+                  values: [1, 2, 3, 4, 5]
+          
+          - name: risk_score
+            description: "Risk assessment score"
+          
+          - name: return_score
+            description: "Return performance score"
+          
+          - name: analyst_outlook
+            description: "Analyst outlook classification"
+            tests:
+              - accepted_values:
+                  values: ['Positive', 'Neutral', 'Negative', 'Under Review']
+
+  # ============================================
+  # LANDING STREAMS - For Incremental Models
+  # ============================================
+  
+  - name: landing_streams
+    description: "Snowflake streams for Change Data Capture (CDC) - captures INSERT/UPDATE/DELETE operations"
+    database: finance_db
+    schema: landing
+    
+    tables:
+      - name: transactions_stream
+        description: "Stream capturing all changes to transactions table for incremental processing"
+        identifier: transactions_stream
+      
+      - name: fund_holdings_stream
+        description: "Stream capturing changes to fund holdings for portfolio tracking"
+        identifier: fund_holdings_stream
+      
+      - name: account_balances_stream
+        description: "Stream capturing daily balance changes for incremental aggregation"
+        identifier: account_balances_stream
