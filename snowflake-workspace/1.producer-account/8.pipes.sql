@@ -5,15 +5,338 @@ USE DATABASE FINANCE_DB;
 -- SHOW ALL PIPES
 --==============================
 
-USE SCHEMA GCS_RAW;
+USE SCHEMA POSTGRES_RAW;
 
 SHOW PIPES;
 
---==============================
--- SHOW ALL PIPES
---==============================
+--========================================
+-- CREATE PIPES FOR CGS RAW SCHAMA TABLES
+--========================================
+
+-->> INVESTORS PIPE
+
+CREATE OR REPLACE PIPE POSTGRES_RAW.INVESTORS_PIPE 
+INTEGRATION = GCS_FINANCE_DATA_LANDING_NOTIFICATION_INT
+AUTO_INGEST = TRUE
+AS
+COPY INTO POSTGRES_RAW.INVESTORS
+FROM 
+(
+SELECT 
+    $1:investor_id::NUMBER                 AS INVESTOR_ID,
+    $1:first_name::VARCHAR(100)            AS FIRST_NAME,
+    $1:last_name::VARCHAR(100)             AS LAST_NAME,
+    $1:email::VARCHAR(255)                 AS EMAIL,
+    $1:phone::VARCHAR(20)                  AS PHONE,
+    $1:date_of_birth::DATE                 AS DATE_OF_BIRTH,
+    $1:registration_date::DATE             AS REGISTRATION_DATE,
+    $1:kyc_status::VARCHAR(20)             AS KYC_STATUS,
+    $1:risk_profile::VARCHAR(20)           AS RISK_PROFILE,
+    $1:customer_segment::VARCHAR(20)       AS CUSTOMER_SEGMENT,
+    $1:address_line1::VARCHAR(255)         AS ADDRESS_LINE1,
+    $1:address_line2::VARCHAR(255)         AS ADDRESS_LINE2,
+    $1:city::VARCHAR(100)                  AS CITY,
+    $1:state::VARCHAR(100)                 AS STATE,
+    $1:postal_code::VARCHAR(20)            AS POSTAL_CODE,
+    $1:country::VARCHAR(50)                AS COUNTRY,
+    $1:is_active::BOOLEAN                  AS IS_ACTIVE,
+    $1:created_at::TIMESTAMP_NTZ           AS CREATED_AT,
+    $1:updated_at::TIMESTAMP_NTZ           AS UPDATED_AT,
+    --
+    METADATA$FILENAME                      AS SOURCE_FILE_NAME,
+    METADATA$FILE_ROW_NUMBER               AS SOURCE_FILE_ROW_NUMBER,
+    METADATA$FILE_CONTENT_KEY              AS FILE_CONTENT_KEY,
+    METADATA$FILE_LAST_MODIFIED            AS FILE_LAST_MODIFIED_TIMESTAMP,
+    CURRENT_TIMESTAMP()                    AS LOAD_TIMESTAMP,
+    'PIPE'                         		   AS LOAD_SOURCE
+FROM @POSTGRES_RAW.INVESTORS_STAGE
+)
+PATTERN = '.*trino-extracts/investors.*\.csv';
+
+--
+
+LIST @POSTGRES_RAW.INVESTORS_STAGE
+
+ALTER PIPE POSTGRES_RAW.INVESTORS_PIPE REFRESH;
+
+SELECT TOP 10 * FROM POSTGRES_RAW.INVESTORS
+
+SELECT SYSTEM$PIPE_STATUS('POSTGRES_RAW.INVESTORS_PIPE');
+
+
+-->> FUND MANAGERS PIPE
+
+CREATE OR REPLACE PIPE POSTGRES_RAW.FUND_MANAGERS_PIPE 
+INTEGRATION = GCS_FINANCE_DATA_LANDING_NOTIFICATION_INT
+AUTO_INGEST = TRUE
+AS
+COPY INTO POSTGRES_RAW.FUND_MANAGERS
+FROM 
+(
+SELECT 
+    $1:manager_id::NUMBER                    AS MANAGER_ID,
+    $1:manager_code::VARCHAR(20)             AS MANAGER_CODE,
+    $1:first_name::VARCHAR(100)              AS FIRST_NAME,
+    $1:last_name::VARCHAR(100)               AS LAST_NAME,
+    $1:email::VARCHAR(255)                   AS EMAIL,
+    $1:years_experience::INT                 AS YEARS_EXPERIENCE,
+    $1:education::VARCHAR(255)               AS EDUCATION,
+    $1:specialization::VARCHAR(100)          AS SPECIALIZATION,
+    $1:is_active::BOOLEAN                     AS IS_ACTIVE,
+    $1:hire_date::DATE                        AS HIRE_DATE,
+    $1:created_at::TIMESTAMP_NTZ             AS CREATED_AT,
+    $1:updated_at::TIMESTAMP_NTZ             AS UPDATED_AT,
+    --
+    METADATA$FILENAME                         AS SOURCE_FILE_NAME,
+    METADATA$FILE_ROW_NUMBER                  AS SOURCE_FILE_ROW_NUMBER,
+    METADATA$FILE_CONTENT_KEY                 AS FILE_CONTENT_KEY,
+    METADATA$FILE_LAST_MODIFIED               AS FILE_LAST_MODIFIED_TIMESTAMP,
+    CURRENT_TIMESTAMP()                       AS LOAD_TIMESTAMP,
+    'PIPE'                                    AS LOAD_SOURCE
+FROM @POSTGRES_RAW.FUND_MANAGERS_STAGE
+)
+PATTERN = '.*trino-extracts/fund_managers.*\.csv';
+
+--
+
+LIST @POSTGRES_RAW.FUND_MANAGERS_STAGE;
+
+ALTER PIPE POSTGRES_RAW.FUND_MANAGERS_PIPE REFRESH;
+
+SELECT TOP 10 * FROM POSTGRES_RAW.FUND_MANAGERS;
+
+SELECT SYSTEM$PIPE_STATUS('POSTGRES_RAW.FUND_MANAGERS_PIPE');
+
+
+-->> FUNDS PIPE
+
+CREATE OR REPLACE PIPE POSTGRES_RAW.FUNDS_PIPE 
+INTEGRATION = GCS_FINANCE_DATA_LANDING_NOTIFICATION_INT
+AUTO_INGEST = TRUE
+AS
+COPY INTO POSTGRES_RAW.FUNDS
+FROM 
+(
+SELECT 
+    $1:fund_id::NUMBER                       AS FUND_ID,
+    $1:fund_code::VARCHAR(20)                AS FUND_CODE,
+    $1:fund_name::VARCHAR(255)               AS FUND_NAME,
+    $1:fund_category::VARCHAR(50)            AS FUND_CATEGORY,
+    $1:fund_type::VARCHAR(20)                AS FUND_TYPE,
+    $1:manager_id::NUMBER                     AS MANAGER_ID,
+    $1:inception_date::DATE                   AS INCEPTION_DATE,
+    $1:expense_ratio::NUMBER(5,4)            AS EXPENSE_RATIO,
+    $1:minimum_investment::NUMBER(15,2)      AS MINIMUM_INVESTMENT,
+    $1:aum_millions::NUMBER(15,2)            AS AUM_MILLIONS,
+    $1:benchmark_index::VARCHAR(100)         AS BENCHMARK_INDEX,
+    $1:is_active::BOOLEAN                     AS IS_ACTIVE,
+    $1:created_at::TIMESTAMP_NTZ             AS CREATED_AT,
+    $1:updated_at::TIMESTAMP_NTZ             AS UPDATED_AT,
+    --
+    METADATA$FILENAME                         AS SOURCE_FILE_NAME,
+    METADATA$FILE_ROW_NUMBER                  AS SOURCE_FILE_ROW_NUMBER,
+    METADATA$FILE_CONTENT_KEY                 AS FILE_CONTENT_KEY,
+    METADATA$FILE_LAST_MODIFIED               AS FILE_LAST_MODIFIED_TIMESTAMP,
+    CURRENT_TIMESTAMP()                       AS LOAD_TIMESTAMP,
+    'PIPE'                                    AS LOAD_SOURCE
+FROM @POSTGRES_RAW.FUNDS_STAGE
+)
+PATTERN = '.*trino-extracts/funds.*\.csv';
+
+--
+
+LIST @POSTGRES_RAW.FUNDS_STAGE;
+
+ALTER PIPE POSTGRES_RAW.FUNDS_PIPE REFRESH;
+
+SELECT TOP 10 * FROM POSTGRES_RAW.FUNDS;
+
+SELECT SYSTEM$PIPE_STATUS('POSTGRES_RAW.FUNDS_PIPE');
+
+
+-->> ACCOUNTS PIPE
+
+CREATE OR REPLACE PIPE POSTGRES_RAW.ACCOUNTS_PIPE 
+INTEGRATION = GCS_FINANCE_DATA_LANDING_NOTIFICATION_INT
+AUTO_INGEST = TRUE
+AS
+COPY INTO POSTGRES_RAW.ACCOUNTS
+FROM 
+(
+SELECT 
+    $1:account_id::NUMBER                    AS ACCOUNT_ID,
+    $1:account_number::VARCHAR(20)           AS ACCOUNT_NUMBER,
+    $1:investor_id::NUMBER                   AS INVESTOR_ID,
+    $1:account_type::VARCHAR(20)             AS ACCOUNT_TYPE,
+    $1:account_status::VARCHAR(20)           AS ACCOUNT_STATUS,
+    $1:opening_date::DATE                     AS OPENING_DATE,
+    $1:closing_date::DATE                     AS CLOSING_DATE,
+    $1:total_balance::NUMBER(15,2)           AS TOTAL_BALANCE,
+    $1:currency::VARCHAR(3)                  AS CURRENCY,
+    $1:created_at::TIMESTAMP_NTZ             AS CREATED_AT,
+    $1:updated_at::TIMESTAMP_NTZ             AS UPDATED_AT,
+    --
+    METADATA$FILENAME                         AS SOURCE_FILE_NAME,
+    METADATA$FILE_ROW_NUMBER                  AS SOURCE_FILE_ROW_NUMBER,
+    METADATA$FILE_CONTENT_KEY                 AS FILE_CONTENT_KEY,
+    METADATA$FILE_LAST_MODIFIED               AS FILE_LAST_MODIFIED_TIMESTAMP,
+    CURRENT_TIMESTAMP()                       AS LOAD_TIMESTAMP,
+    'PIPE'                                    AS LOAD_SOURCE
+FROM @POSTGRES_RAW.ACCOUNTS_STAGE
+)
+PATTERN = '.*trino-extracts/accounts.*\.csv';
+
+--
+
+LIST @POSTGRES_RAW.ACCOUNTS_STAGE;
+
+ALTER PIPE POSTGRES_RAW.ACCOUNTS_PIPE REFRESH;
+
+SELECT TOP 10 * FROM POSTGRES_RAW.ACCOUNTS;
+
+SELECT SYSTEM$PIPE_STATUS('POSTGRES_RAW.ACCOUNTS_PIPE');
+
+
+-->> FUND HOLDINGS PIPE
+
+CREATE OR REPLACE PIPE POSTGRES_RAW.FUND_HOLDINGS_PIPE 
+INTEGRATION = GCS_FINANCE_DATA_LANDING_NOTIFICATION_INT
+AUTO_INGEST = TRUE
+AS
+COPY INTO POSTGRES_RAW.FUND_HOLDINGS
+FROM 
+(
+SELECT 
+    $1:holding_id::NUMBER                     AS HOLDING_ID,
+    $1:account_id::NUMBER                     AS ACCOUNT_ID,
+    $1:fund_id::NUMBER                        AS FUND_ID,
+    $1:units_held::NUMBER(15,4)               AS UNITS_HELD,
+    $1:average_cost_per_unit::NUMBER(15,4)    AS AVERAGE_COST_PER_UNIT,
+    $1:current_value::NUMBER(15,2)            AS CURRENT_VALUE,
+    $1:last_transaction_date::DATE             AS LAST_TRANSACTION_DATE,
+    $1:created_at::TIMESTAMP_NTZ              AS CREATED_AT,
+    $1:updated_at::TIMESTAMP_NTZ              AS UPDATED_AT,
+    --
+    METADATA$FILENAME                          AS SOURCE_FILE_NAME,
+    METADATA$FILE_ROW_NUMBER                   AS SOURCE_FILE_ROW_NUMBER,
+    METADATA$FILE_CONTENT_KEY                  AS FILE_CONTENT_KEY,
+    METADATA$FILE_LAST_MODIFIED                AS FILE_LAST_MODIFIED_TIMESTAMP,
+    CURRENT_TIMESTAMP()                        AS LOAD_TIMESTAMP,
+    'PIPE'                                     AS LOAD_SOURCE
+FROM @POSTGRES_RAW.FUND_HOLDINGS_STAGE
+)
+PATTERN = '.*trino-extracts/fund_holdings.*\.csv';
+
+--
+
+LIST @POSTGRES_RAW.FUND_HOLDINGS_STAGE;
+
+ALTER PIPE POSTGRES_RAW.FUND_HOLDINGS_PIPE REFRESH;
+
+SELECT TOP 10 * FROM POSTGRES_RAW.FUND_HOLDINGS;
+
+SELECT SYSTEM$PIPE_STATUS('POSTGRES_RAW.FUND_HOLDINGS_PIPE');
+
+
+-->> TRANSACTIONS PIPE
+
+CREATE OR REPLACE PIPE POSTGRES_RAW.TRANSACTIONS_PIPE 
+INTEGRATION = GCS_FINANCE_DATA_LANDING_NOTIFICATION_INT
+AUTO_INGEST = TRUE
+AS
+COPY INTO POSTGRES_RAW.TRANSACTIONS
+FROM 
+(
+SELECT 
+    $1:transaction_id::NUMBER                 AS TRANSACTION_ID,
+    $1:transaction_number::VARCHAR(30)        AS TRANSACTION_NUMBER,
+    $1:account_id::NUMBER                      AS ACCOUNT_ID,
+    $1:fund_id::NUMBER                         AS FUND_ID,
+    $1:transaction_type::VARCHAR(20)          AS TRANSACTION_TYPE,
+    $1:transaction_date::DATE                  AS TRANSACTION_DATE,
+    $1:settlement_date::DATE                   AS SETTLEMENT_DATE,
+    $1:units::NUMBER(15,4)                     AS UNITS,
+    $1:price_per_unit::NUMBER(15,4)           AS PRICE_PER_UNIT,
+    $1:amount::NUMBER(15,2)                    AS AMOUNT,
+    $1:fees::NUMBER(15,2)                      AS FEES,
+    $1:tax_amount::NUMBER(15,2)                AS TAX_AMOUNT,
+    $1:net_amount::NUMBER(15,2)                AS NET_AMOUNT,
+    $1:transaction_status::VARCHAR(20)        AS TRANSACTION_STATUS,
+    $1:channel::VARCHAR(20)                    AS CHANNEL,
+    $1:notes::VARCHAR                          AS NOTES,
+    $1:created_at::TIMESTAMP_NTZ               AS CREATED_AT,
+    $1:updated_at::TIMESTAMP_NTZ               AS UPDATED_AT,
+    --
+    METADATA$FILENAME                          AS SOURCE_FILE_NAME,
+    METADATA$FILE_ROW_NUMBER                   AS SOURCE_FILE_ROW_NUMBER,
+    METADATA$FILE_CONTENT_KEY                  AS FILE_CONTENT_KEY,
+    METADATA$FILE_LAST_MODIFIED                AS FILE_LAST_MODIFIED_TIMESTAMP,
+    CURRENT_TIMESTAMP()                        AS LOAD_TIMESTAMP,
+    'PIPE'                                     AS LOAD_SOURCE
+FROM @POSTGRES_RAW.TRANSACTIONS_STAGE
+)
+PATTERN = '.*trino-extracts/transactions.*\.csv';
+
+--
+
+LIST @POSTGRES_RAW.TRANSACTIONS_STAGE;
+
+ALTER PIPE POSTGRES_RAW.TRANSACTIONS_PIPE REFRESH;
+
+SELECT TOP 10 * FROM POSTGRES_RAW.TRANSACTIONS;
+
+SELECT SYSTEM$PIPE_STATUS('POSTGRES_RAW.TRANSACTIONS_PIPE');
+
+
+-->> ACCOUNT BALANCES PIPE
+
+CREATE OR REPLACE PIPE POSTGRES_RAW.ACCOUNT_BALANCES_PIPE 
+INTEGRATION = GCS_FINANCE_DATA_LANDING_NOTIFICATION_INT
+AUTO_INGEST = TRUE
+AS
+COPY INTO POSTGRES_RAW.ACCOUNT_BALANCES
+FROM 
+(
+SELECT 
+    $1:balance_id::NUMBER                      AS BALANCE_ID,
+    $1:account_id::NUMBER                      AS ACCOUNT_ID,
+    $1:balance_date::DATE                       AS BALANCE_DATE,
+    $1:opening_balance::NUMBER(15,2)           AS OPENING_BALANCE,
+    $1:closing_balance::NUMBER(15,2)           AS CLOSING_BALANCE,
+    $1:net_deposits::NUMBER(15,2)              AS NET_DEPOSITS,
+    $1:net_withdrawals::NUMBER(15,2)           AS NET_WITHDRAWALS,
+    $1:net_investment_gain::NUMBER(15,2)       AS NET_INVESTMENT_GAIN,
+    $1:created_at::TIMESTAMP_NTZ               AS CREATED_AT,
+    $1:updated_at::TIMESTAMP_NTZ               AS UPDATED_AT,
+    --
+    METADATA$FILENAME                           AS SOURCE_FILE_NAME,
+    METADATA$FILE_ROW_NUMBER                    AS SOURCE_FILE_ROW_NUMBER,
+    METADATA$FILE_CONTENT_KEY                   AS FILE_CONTENT_KEY,
+    METADATA$FILE_LAST_MODIFIED                 AS FILE_LAST_MODIFIED_TIMESTAMP,
+    CURRENT_TIMESTAMP()                         AS LOAD_TIMESTAMP,
+    'PIPE'                                      AS LOAD_SOURCE
+FROM @POSTGRES_RAW.ACCOUNT_BALANCES_STAGE
+)
+PATTERN = '.*trino-extracts/account_balances.*\.csv';
+
+--
+
+LIST @POSTGRES_RAW.ACCOUNT_BALANCES_STAGE;
+
+ALTER PIPE POSTGRES_RAW.ACCOUNT_BALANCES_PIPE REFRESH;
+
+SELECT TOP 10 * FROM POSTGRES_RAW.ACCOUNT_BALANCES;
+
+SELECT SYSTEM$PIPE_STATUS('POSTGRES_RAW.ACCOUNT_BALANCES_PIPE');
+
+
+--========================================
+-- CREATE PIPES FOR CGS RAW SCHAMA TABLES
+--========================================
 
 -->> FUND METADATA PIPE CSV FILES
+
+USE SCHEMA GCS_RAW;
 
 CREATE OR REPLACE PIPE GCS_RAW.FUND_METADATA_PIPE 
 INTEGRATION = GCS_FINANCE_DATA_LANDING_NOTIFICATION_INT
@@ -59,6 +382,8 @@ SELECT SYSTEM$PIPE_STATUS('GCS_RAW.FUND_METADATA_PIPE');
 
 -->> NAV DATA PIPE , CSV FILES
 
+USE SCHEMA GCS_RAW;
+
 CREATE OR REPLACE PIPE GCS_RAW.NAV_DATA_PIPE 
 INTEGRATION = GCS_FINANCE_DATA_LANDING_NOTIFICATION_INT
 AUTO_INGEST = TRUE
@@ -98,6 +423,8 @@ SELECT SYSTEM$PIPE_STATUS('GCS_RAW.NAV_DATA_PIPE');
 
 -->> MARKET_DATA PIPE (RAW JSON)
 
+USE SCHEMA GCS_RAW;
+
 CREATE OR REPLACE PIPE GCS_RAW.MARKET_DATA_PIPE 
 INTEGRATION = GCS_FINANCE_DATA_LANDING_NOTIFICATION_INT
 AUTO_INGEST = TRUE
@@ -132,6 +459,8 @@ SELECT SYSTEM$PIPE_STATUS('GCS_RAW.MARKET_DATA_PIPE');
 
 
 -->> RATINGS DATA 
+
+USE SCHEMA GCS_RAW;
 
 CREATE OR REPLACE PIPE GCS_RAW.RATINGS_DATA_PIPE 
 INTEGRATION = GCS_FINANCE_DATA_LANDING_NOTIFICATION_INT
