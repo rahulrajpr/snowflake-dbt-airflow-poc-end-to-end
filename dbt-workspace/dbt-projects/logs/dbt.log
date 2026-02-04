@@ -1,0 +1,57 @@
+[0m13:40:07.745319 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7802a7a87290>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7802a7f70500>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7802a8054cb0>]}
+
+
+============================== 13:40:07.750789 | 2a9b33e6-c7f4-4631-aec7-a2130c2a55ad ==============================
+[0m13:40:07.750789 [info ] [MainThread]: Running with dbt=1.11.2
+[0m13:40:07.751632 [debug] [MainThread]: running dbt with arguments {'write_json': 'True', 'use_experimental_parser': 'False', 'target_path': 'None', 'send_anonymous_usage_stats': 'True', 'static_parser': 'True', 'profiles_dir': '/root/.dbt', 'indirect_selection': 'eager', 'log_path': 'logs', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'version_check': 'True', 'printer_width': '80', 'cache_selected_only': 'False', 'log_cache_events': 'False', 'warn_error': 'None', 'use_colors': 'True', 'empty': 'None', 'introspect': 'True', 'no_print': 'None', 'quiet': 'False', 'invocation_command': 'dbt init finance_analytics', 'partial_parse': 'True', 'fail_fast': 'False', 'log_format': 'default', 'debug': 'False'}
+[0m13:40:07.774354 [info ] [MainThread]: Creating dbt configuration folder at /root/.dbt
+[0m13:40:07.777528 [debug] [MainThread]: Starter project path: /usr/local/lib/python3.12/site-packages/dbt/include/starter_project
+[0m13:40:07.988213 [info ] [MainThread]: 
+Your new dbt project "finance_analytics" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m13:40:07.988996 [info ] [MainThread]: Setting up your profile.
+[0m13:40:16.036531 [error] [MainThread]: Encountered an error:
+
+[0m13:40:16.040438 [error] [MainThread]: Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/dbt/cli/requires.py", line 182, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/dbt/cli/requires.py", line 128, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/dbt/cli/main.py", line 483, in init
+    results = task.run()
+              ^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/dbt/task/init.py", line 346, in run
+    self.setup_profile(profile_name)
+  File "/usr/local/lib/python3.12/site-packages/dbt/task/init.py", line 261, in setup_profile
+    adapter = self.ask_for_adapter_choice()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/dbt/task/init.py", line 242, in ask_for_adapter_choice
+    numeric_choice = click.prompt(prompt_msg, type=click.INT)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/click/termui.py", line 171, in prompt
+    value = prompt_func(prompt)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/click/termui.py", line 154, in prompt_func
+    raise Abort() from None
+click.exceptions.Abort
+
+[0m13:40:16.043323 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": false, "command_wall_clock_time": 8.356118, "process_in_blocks": "5336", "process_kernel_time": 0.382932, "process_mem_max_rss": "101316", "process_out_blocks": "0", "process_user_time": 1.314062}
+[0m13:40:16.044348 [debug] [MainThread]: Command `dbt init` failed at 13:40:16.044206 after 8.36 seconds
+[0m13:40:16.044959 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7802abacab70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7802a71bc380>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7802a71bd0d0>]}
+[0m13:40:16.045704 [debug] [MainThread]: Flushing usage events
+[0m13:40:17.619659 [debug] [MainThread]: An error was encountered while trying to flush usage events
