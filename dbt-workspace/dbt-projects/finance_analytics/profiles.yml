@@ -1,0 +1,15 @@
+finance_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: UAHYRSV-ZJ51694  # Example: abc12345.us-east-1 or orgname-accountname
+      user: rahulraj
+      password: Snowflakeisfun@123
+      role: DBT_TRANSFORM_ROLE
+      database: FINANCE_DB
+      warehouse: POC_TRANSFORM_WAREHOUSE
+      schema: STAGING
+      threads: 4
+      client_session_keep_alive: False
+      query_tag: dbt_finance_analytics
