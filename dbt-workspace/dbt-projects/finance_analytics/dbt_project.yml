@@ -21,21 +21,18 @@ models:
     # Staging layer - Clean, typed, 1:1 with sources
     staging:
       +materialized: table
-      +data_retention_time_in_days: 3
       +schema: staging
       +tags: ["staging"]
     
     # Intermediate layer - Business logic
     intermediate:
       +materialized: table
-      +data_retention_time_in_days: 3
       +schema: intermediate
       +tags: ["intermediate"]
     
     # Marts layer - Analytics-ready
     marts:
       +materialized: table
-      +data_retention_time_in_days: 7
       +tags: ["marts"]
       finance:
         +schema: analytics
