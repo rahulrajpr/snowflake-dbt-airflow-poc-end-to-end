@@ -69,3 +69,9 @@ Then run:
 dbt clean --profiles-dir .
 dbt run --select stg_investors --profiles-dir .
 ```
+
+selecting the subdierctory is not by using the slashed. but by using the . dots
+exaple
+
+dbt run --full-refresh --select marts/finance.* -- will not work
+but dbt run --full-refresh --select marts.finance.* -- will work
