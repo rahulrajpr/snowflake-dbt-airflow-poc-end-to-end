@@ -1,0 +1,64 @@
+[0m06:18:13  Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74b559a16360>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74b55908d1f0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74b559b979b0>]}
+[0m06:18:13  Running with dbt=1.11.2
+[0m06:18:13  running dbt with arguments {'quiet': 'False', 'no_print': 'None', 'empty': 'False', 'log_path': '/dbt-workspace/dbt-projects/finance_analytics/logs', 'introspect': 'True', 'printer_width': '80', 'target_path': 'None', 'version_check': 'True', 'send_anonymous_usage_stats': 'True', 'use_experimental_parser': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'debug': 'True', 'log_format': 'default', 'use_colors': 'True', 'write_json': 'True', 'cache_selected_only': 'False', 'static_parser': 'True', 'profiles_dir': '.', 'partial_parse': 'True', 'warn_error': 'None', 'fail_fast': 'False', 'invocation_command': 'dbt --debug run --select stg_investors --profiles-dir .', 'log_cache_events': 'False', 'indirect_selection': 'eager'}
+[0m06:18:13  Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m06:18:13  Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m06:18:13  Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m06:18:14  Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'd99eecb8-5a06-42c1-97f9-45d0b4182f11', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74b55676b410>]}
+[0m06:18:14  Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'd99eecb8-5a06-42c1-97f9-45d0b4182f11', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74b557ae91c0>]}
+[0m06:18:14  Registered adapter: snowflake=1.11.1
+[0m06:18:14  checksum: 3d40d8bbe1bef07db1c24822f2dbfff8bc07f2a48ed4fe2658a40653aec0b54b, vars: {}, profile: , target: , version: 1.11.2
+[0m06:18:20  Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m06:18:20  Nothing changed, skipping partial parsing.
+[0m06:18:20  Partial parsing enabled, no changes found, skipping parsing
+[0m06:18:20  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 6 unused configuration paths:
+- models.finance_analytics.marts.finance
+- models.finance_analytics.marts
+- models.finance_analytics.intermediate
+- models.finance_analytics.marts.analytics
+- seeds.finance_analytics
+- snapshots.finance_analytics
+[0m06:18:20  Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'd99eecb8-5a06-42c1-97f9-45d0b4182f11', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74b55661a270>]}
+[0m06:18:20  Wrote artifact WritableManifest to /dbt-workspace/dbt-projects/finance_analytics/target/manifest.json
+[0m06:18:20  Wrote artifact SemanticManifest to /dbt-workspace/dbt-projects/finance_analytics/target/semantic_manifest.json
+[0m06:18:20  Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'd99eecb8-5a06-42c1-97f9-45d0b4182f11', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74b556337d40>]}
+[0m06:18:20  Found 1 model, 72 data tests, 14 sources, 925 macros
+[0m06:18:20  Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'd99eecb8-5a06-42c1-97f9-45d0b4182f11', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74b55634aa50>]}
+[0m06:18:20  
+[0m06:18:20  Concurrency: 4 threads (target='dev')
+[0m06:18:20  
+[0m06:18:20  Acquiring new snowflake connection 'master'
+[0m06:18:20  Acquiring new snowflake connection 'list_FINANCE_DB'
+[0m06:18:20  Using snowflake connection "list_FINANCE_DB"
+[0m06:18:20  On list_FINANCE_DB: show terse schemas in database FINANCE_DB
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.11.2", "profile_name": "finance_analytics", "target_name": "dev", "connection_name": "list_FINANCE_DB"} */
+[0m06:18:20  Opening a new connection, currently in state init
+[0m06:18:23  SQL status: SUCCESS 8 in 2.682 seconds
+[0m06:18:23  Re-using an available connection from the pool (formerly list_FINANCE_DB, now create_FINANCE_DB_STAGING_staging)
+[0m06:18:23  Creating schema "database: "FINANCE_DB"
+schema: "STAGING_staging"
+"
+[0m06:18:23  Using snowflake connection "create_FINANCE_DB_STAGING_staging"
+[0m06:18:23  On create_FINANCE_DB_STAGING_staging: create schema if not exists FINANCE_DB.STAGING_staging
+/* {"app": "dbt", "dbt_version": "1.11.2", "profile_name": "finance_analytics", "target_name": "dev", "connection_name": "create_FINANCE_DB_STAGING_staging"} */
+[0m06:18:23  Snowflake adapter: Snowflake query id: 01c2341a-0004-7827-000b-04ca000743fa
+[0m06:18:23  Snowflake adapter: Snowflake error: 003001 (42501): SQL access control error:
+Insufficient privileges to operate on database 'FINANCE_DB'.
+[0m06:18:23  Snowflake adapter: Error running SQL: macro create_schema
+[0m06:18:23  Snowflake adapter: Rolling back transaction.
+[0m06:18:23  Connection 'master' was properly closed.
+[0m06:18:23  Connection 'create_FINANCE_DB_STAGING_staging' was left open.
+[0m06:18:23  On create_FINANCE_DB_STAGING_staging: Close
+[0m06:18:24  
+[0m06:18:24  Finished running  in 0 hours 0 minutes and 3.69 seconds (3.69s).
+[0m06:18:24  Encountered an error:
+Database Error
+  003001 (42501): SQL access control error:
+  Insufficient privileges to operate on database 'FINANCE_DB'.
+[0m06:18:24  Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 11.243784, "process_in_blocks": "0", "process_kernel_time": 1.747546, "process_mem_max_rss": "148668", "process_out_blocks": "16", "process_user_time": 4.463709}
+[0m06:18:24  Command `dbt run` failed at 06:18:24.296031 after 11.25 seconds
+[0m06:18:24  Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74b5599bdf70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74b55634b2c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74b555dfcc80>]}
+[0m06:18:24  Flushing usage events
+[0m06:18:25  An error was encountered while trying to flush usage events
