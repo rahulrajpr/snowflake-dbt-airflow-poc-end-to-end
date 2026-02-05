@@ -69,11 +69,15 @@ cleaned AS (
     FROM source
     
     WHERE 1=1
-        AND account_id IS NOT NULL
-        AND account_number IS NOT NULL
-        AND investor_id IS NOT NULL
-        AND account_type IN ('SAVINGS', 'RETIREMENT', 'BROKERAGE', 'TRUST')
-        AND currency IN ('USD', 'EUR', 'GBP', 'INR')
+           AND account_id IS NOT NULL
+           AND account_number IS NOT NULL
+           AND investor_id IS NOT NULL
+           AND account_type IN ('JOINT', 'IRA', 'CORPORATE', 'REGULAR','ROTH_IRA')
+           AND currency IN ('USD', 'EUR', 'GBP', 'INR')
 )
 
 SELECT * FROM cleaned
+
+
+
+
