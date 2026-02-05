@@ -7,8 +7,7 @@
 
 /*
 =============================================================================
-MODEL: stg_accounts
-=============================================================================
+
 PURPOSE:
     - Clean and standardize account data from PostgreSQL
     - Validate account status and types
@@ -29,7 +28,6 @@ TRANSFORMATION LOGIC:
 DEPENDENCIES:
     - Source: landing.vw_accounts
     
-OUTPUT SCHEMA: FINANCE_DB.STAGING.STG_ACCOUNTS
 =============================================================================
 */
 
