@@ -7,6 +7,8 @@ cd docker
 
 # 1. Start core stack
 echo "Starting PostgreSQL, Trino, Airflow, Superset, DBT..."
+
+docker-compose build airflow
 docker compose up -d
 
 # 2. Back to the Root Directory
