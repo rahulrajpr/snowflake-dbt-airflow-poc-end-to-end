@@ -139,7 +139,7 @@ services:
       "
     networks:
       - shared-network
-    user: "0:0"
+    #user: "0:0"
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
       interval: 30s
@@ -176,7 +176,7 @@ services:
     command: airflow scheduler
     networks:
       - shared-network
-    user: "0:0"
+    #user: "0:0"
 
   python:
     image: python:3.12-slim
