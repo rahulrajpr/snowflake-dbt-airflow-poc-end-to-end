@@ -127,6 +127,8 @@ services:
       - ${AIRFLOW_PLUGINS_PATH}:/opt/airflow/plugins
       - /var/run/docker.sock:/var/run/docker.sock
       - ${TRINO_SQL_PATH}:/trino-sql:ro
+      - ${DBT_WORKSPACE_PATH}:/dbt-workspace:ro
+      - ${GOOGLE_APPLICATION_CREDENTIALS}:/gcp-credentials/gcp-gcs-credentials.json:ro
     ports:
       - "${AIRFLOW_PORT}:8080"
     command: >
@@ -169,6 +171,8 @@ services:
       - ${AIRFLOW_PLUGINS_PATH}:/opt/airflow/plugins
       - /var/run/docker.sock:/var/run/docker.sock
       - ${TRINO_SQL_PATH}:/trino-sql:ro
+      - ${DBT_WORKSPACE_PATH}:/dbt-workspace:ro
+      - ${GOOGLE_APPLICATION_CREDENTIALS}:/gcp-credentials/gcp-gcs-credentials.json:ro
     command: airflow scheduler
     networks:
       - shared-network
