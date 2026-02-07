@@ -1,25 +1,12 @@
-"""
-=============================================================================
-DAG: dbt_finance_analytics
-=============================================================================
-PURPOSE:
-    - Run dbt finance analytics project
-    - Capture logs and upload to GCS
-=============================================================================
-"""
-
 from datetime import datetime, timedelta
 from pathlib import Path
 import json
 import shutil
 
 from airflow import DAG
+from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.providers.google.cloud.transfers.local_to_gcs import LocalFilesystemToGCSOperator
-
-from cosmos import DbtTaskGroup
-from cosmos.config import ProjectConfig, ProfileConfig, ExecutionConfig, RenderConfig
-from cosmos.constants import ExecutionMode
 
 # ============================================================================
 # CONFIG
@@ -84,30 +71,22 @@ default_args = {
 with DAG(
     dag_id='snowflake-dbt-transform',
     default_args=default_args,
-    description='Run dbt and store logs in GCS',
+    description='Run dbt build and store logs in GCS',
     schedule_interval='0 2 * * *',  # Daily 2 AM
     start_date=datetime(2026, 2, 1),
     catchup=False,
     tags=['dbt', 'finance'],
 ) as dag:
 
-    # Run dbt
-    dbt_run = DbtTaskGroup(
-        group_id='dbt_run',
-        project_config=ProjectConfig(
-            dbt_project_path=DBT_PROJECT_PATH,
-        ),
-        profile_config=ProfileConfig(
-            profile_name='finance_analytics',
-            target_name='prod',
-            profiles_yml_filepath=f"{DBT_PROJECT_PATH}/profiles.yml",
-        ),
-        execution_config=ExecutionConfig(
-            dbt_executable_path='/usr/local/bin/dbt',
-        ),
-        render_config=RenderConfig(
-            select=['path:models'],
-        ),
+    # Run dbt build (runs + tests in one command)
+    dbt_build = BashOperator(
+        task_id='dbt_build',
+        bash_command="""
+        docker exec python-dbt-container bash -c "
+            cd /dbt-workspace/dbt-projects/finance_analytics && \
+            dbt build --profiles-dir . --target dev
+        "
+        """,
     )
 
     # Capture logs
@@ -126,4 +105,4 @@ with DAG(
     )
 
     # Dependencies
-    dbt_run >> capture >> upload
+    dbt_build >> capture >> upload
