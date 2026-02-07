@@ -51,7 +51,7 @@ def read_sql(filepath):
 # ============================================
 
 with DAG(
-    dag_id="postgres-to-hive-gcs",
+    dag_id="postgres-to-gsc",
     default_args=default_args,
     start_date=days_ago(1),
     schedule_interval="0 */6 * * *",
